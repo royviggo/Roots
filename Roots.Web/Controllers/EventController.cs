@@ -1,6 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using Roots.Business.Interfaces;
-using Roots.Business.Models;
+using Roots.Web.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -11,24 +12,36 @@ namespace Roots.Web.Controllers
     public class EventController : ControllerBase
     {
         private readonly IEventService _eventService;
+        private readonly IMapper _mapper;
 
-        public EventController(IEventService eventService)
+        public EventController(IEventService eventService, IMapper mapper)
         {
             _eventService = eventService;
+            _mapper = mapper;
         }
 
         // GET: api/<controller>
         [HttpGet]
-        public async Task<IEnumerable<EventDto>> Get()
+        public async Task<IActionResult> Get()
         {
-            return await _eventService.GetAllAsync();
+            var events = await _eventService.GetAllAsync();
+
+            if (events == null)
+                return BadRequest();
+
+            return Ok(_mapper.Map<IEnumerable<EventVm>>(events));
         }
 
         // GET api/<controller>/5
         [HttpGet("{id}")]
-        public async Task<EventDto> Get(int id)
+        public async Task<IActionResult> Get(int id)
         {
-            return await _eventService.GetByIdAsync(id);
+            var evnt = await _eventService.GetByIdAsync(id);
+
+            if (evnt == null)
+                return NotFound();
+
+            return Ok(_mapper.Map<EventVm>(evnt));
         }
     }
 }

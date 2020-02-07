@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Roots.Business.Interfaces;
-using Roots.Business.Models;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+using Roots.Web.Models;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Roots.Web.Controllers
 {
@@ -15,42 +12,36 @@ namespace Roots.Web.Controllers
     public class PersonController : ControllerBase
     {
         private readonly IPersonService _personService;
+        private readonly IMapper _mapper;
 
-        public PersonController(IPersonService personService)
+        public PersonController(IPersonService personService, IMapper mapper)
         {
             _personService = personService;
+            _mapper = mapper;
         }
 
         // GET: api/<controller>
         [HttpGet]
-        public async Task<IEnumerable<PersonDto>> Get()
+        public async Task<IActionResult> Get()
         {
-            return await _personService.GetAllAsync();
+            var persons = await _personService.GetAllAsync();
+
+            if (persons == null)
+                return BadRequest();
+
+            return Ok(_mapper.Map<IEnumerable<PersonVm>>(persons));
         }
 
         // GET api/<controller>/5
         [HttpGet("{id}")]
-        public async Task<PersonDto> Get(int id)
+        public async Task<IActionResult> Get(int id)
         {
-            return await _personService.GetByIdAsync(id);
+            var person = await _personService.GetByIdAsync(id);
+
+            if (person == null)
+                return BadRequest();
+
+            return Ok(_mapper.Map<PersonVm>(person));
         }
-
-        // POST api/<controller>
-        //[HttpPost]
-        //public void Post([FromBody]string value)
-        //{
-        //}
-
-        //// PUT api/<controller>/5
-        //[HttpPut("{id}")]
-        //public void Put(int id, [FromBody]string value)
-        //{
-        //}
-
-        //// DELETE api/<controller>/5
-        //[HttpDelete("{id}")]
-        //public void Delete(int id)
-        //{
-        //}
     }
 }

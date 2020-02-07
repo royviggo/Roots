@@ -26,7 +26,11 @@ namespace Roots.Business.Services
 
         public async Task<EventDto> GetByIdAsync(int id)
         {
-            var evnt = await _context.Events.FindAsync(id);
+            var evnt = await _context.Events
+                .Include(e => e.EventType)
+                .Include(e => e.Place)
+                .FirstOrDefaultAsync(e => e.Id == id);
+
             return _mapper.Map<EventDto>(evnt);
         }
     }

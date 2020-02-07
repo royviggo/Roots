@@ -1,7 +1,5 @@
-﻿using AutoMapper;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Roots.Business.Interfaces;
-using Roots.Business.Mapping;
 using Roots.Business.Services;
 
 namespace Roots.Business
@@ -10,8 +8,6 @@ namespace Roots.Business
     {
         public static IServiceCollection AddBusinessLayer(this IServiceCollection services)
         {
-            services.AddAutoMapper(typeof(DomainToDtoMappingProfile));
-
             services.AddScoped<IEventService, EventService>();
 
             services.AddScoped<IPersonService, PersonService>();

@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Roots.Business.Models
+namespace Roots.Web.Models
 {
-    public class PersonDto
+    public class PersonVm
     {
-        public PersonDto()
+        public PersonVm()
         {
-            Events = new List<EventDto>();
+            Events = new List<EventVm>();
         }
 
         public int Id { get; set; }
@@ -18,6 +18,6 @@ namespace Roots.Business.Models
         public DateTime? CreatedDate { get; set; }
         public DateTime? ModifiedDate { get; set; }
 
-        public IList<EventDto> Events { get; set; }
+        public IList<EventVm> Events { get; set; }
     }
 }
