@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Operations Version="1.0" xmlns="http://schemas.microsoft.com/sqlserver/dac/Serialization/2012/02">
+  <Operation Name="Rename Refactor" Key="fa1280d4-a98f-4763-9330-7596e97b23f7" ChangeDateTime="02/07/2020 05:27:04">
+    <Property Name="ElementName" Value="[dbo].[Event].[Date_DateString]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Event]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="[EventDateString]" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="a84ce3cd-8582-4cea-86f0-136e2270b7af" ChangeDateTime="02/07/2020 05:28:29">
+    <Property Name="ElementName" Value="[dbo].[Event].[IX_Event_DateString_NN]" />
+    <Property Name="ElementType" Value="SqlIndex" />
+    <Property Name="ParentElementName" Value="[dbo].[Event]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="[IX_Event_EventDateString_NN]" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="dbb70bb3-b98c-425a-b289-dbdcc0823d3e" ChangeDateTime="02/07/2020 05:30:30">
+    <Property Name="ElementName" Value="[dbo].[Event].[IX_Event_EventTypeId_DateTo_NN]" />
+    <Property Name="ElementType" Value="SqlIndex" />
+    <Property Name="ParentElementName" Value="[dbo].[Event]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="[IX_Event_EventTypeId_EventDate_NN]" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="95cc45c5-b8a5-4975-af3b-8b2b48e0b3af" ChangeDateTime="02/07/2020 05:32:18">
+    <Property Name="ElementName" Value="[dbo].[Event].[EventDateString]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Event]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="[EventDate]" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="45416e9f-02ef-48d7-906d-285a7b79f1d4" ChangeDateTime="02/07/2020 05:32:52">
+    <Property Name="ElementName" Value="[dbo].[Event].[IX_Event_EventDateString_NN]" />
+    <Property Name="ElementType" Value="SqlIndex" />
+    <Property Name="ParentElementName" Value="[dbo].[Event]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="[IX_Event_EventDate_NN]" />
+  </Operation>
+</Operations>

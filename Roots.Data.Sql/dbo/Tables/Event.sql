@@ -3,13 +3,7 @@
     [EventTypeId]     INT            NOT NULL,
     [PersonId]        INT            NOT NULL,
     [PlaceId]         INT            NOT NULL,
-    [Date_Datetype]   INT            NOT NULL,
-    [Date_DateFrom]   INT            NOT NULL,
-    [Date_DateTo]     INT            NOT NULL,
-    [Date_DatePhrase] NVARCHAR (255) NULL,
-    [Date_DateString] VARCHAR (18)   NULL,
-    [Date_DateLong]   BIGINT         NULL,
-    [Date_IsValid]    BIT            NULL,
+    [EventDate]       VARCHAR (18)   NULL,
     [Description]     NVARCHAR (255) NULL,
     [CreatedDate]     DATETIME       NULL,
     [ModifiedDate]    DATETIME       NULL,
@@ -21,65 +15,20 @@
 
 
 GO
-CREATE NONCLUSTERED INDEX [IX_Event_DateString_NN]
-    ON [dbo].[Event]([Date_DateString] ASC);
-
-
-GO
-ALTER INDEX [IX_Event_DateString_NN]
-    ON [dbo].[Event] DISABLE;
-
-
-GO
-CREATE NONCLUSTERED INDEX [IX_Event_DateFrom_DateTo_NN]
-    ON [dbo].[Event]([Date_DateFrom] ASC, [Date_DateTo] ASC)
-    INCLUDE([Id]);
-
-
-GO
-CREATE NONCLUSTERED INDEX [IX_Event_DateLong_NN]
-    ON [dbo].[Event]([Date_DateLong] ASC)
-    INCLUDE([EventTypeId], [PersonId], [PlaceId]);
-
-
-GO
-ALTER INDEX [IX_Event_DateLong_NN]
-    ON [dbo].[Event] DISABLE;
-
-
-GO
-CREATE NONCLUSTERED INDEX [IX_Event_DateTo_NN]
-    ON [dbo].[Event]([Date_DateTo] ASC)
-    INCLUDE([Id]);
-
-
-GO
-CREATE NONCLUSTERED INDEX [IX_Event_DateFrom_NN]
-    ON [dbo].[Event]([Date_DateFrom] ASC)
-    INCLUDE([Id]);
+CREATE NONCLUSTERED INDEX [IX_Event_EventDate_NN]
+    ON [dbo].[Event]([EventDate] ASC);
 
 
 GO
 CREATE NONCLUSTERED INDEX [IX_Event_EventTypeId_NN]
     ON [dbo].[Event]([EventTypeId] ASC)
-    INCLUDE([Id], [Date_DateFrom], [Date_DateTo]);
+    INCLUDE([Id], [EventDate]);
 
 
 GO
-CREATE NONCLUSTERED INDEX [IX_Event_EventTypeId_DateFrom_DateTo_NN]
-    ON [dbo].[Event]([PersonId] ASC, [EventTypeId] ASC)
+CREATE NONCLUSTERED INDEX [IX_Event_EventTypeId_EventDate_NN]
+    ON [dbo].[Event]([EventTypeId] ASC, [EventDate] ASC)
     INCLUDE([Id]);
-
-
-GO
-CREATE NONCLUSTERED INDEX [IX_Event_EventTypeId_DateTo_NN]
-    ON [dbo].[Event]([EventTypeId] ASC, [Date_DateTo] ASC)
-    INCLUDE([Id]);
-
-
-GO
-ALTER INDEX [IX_Event_EventTypeId_DateTo_NN]
-    ON [dbo].[Event] DISABLE;
 
 
 GO
