@@ -10,17 +10,8 @@ namespace Roots.Data.Configurations
         {
             builder.ToTable<Event>("Event");
 
-            builder.HasIndex(e => e.DateDateFrom)
-                .HasName("IX_Event_DateFrom_NN");
-
-            builder.HasIndex(e => e.DateDateLong)
-                .HasName("IX_Event_DateLong_NN");
-
-            builder.HasIndex(e => e.DateDateString)
-                .HasName("IX_Event_DateString_NN");
-
-            builder.HasIndex(e => e.DateDateTo)
-                .HasName("IX_Event_DateTo_NN");
+            builder.HasIndex(e => e.EventDate)
+                .HasName("IX_Event_EventDate_NN");
 
             builder.HasIndex(e => e.EventTypeId)
                 .HasName("IX_Event_EventTypeId_NN");
@@ -28,35 +19,14 @@ namespace Roots.Data.Configurations
             builder.HasIndex(e => e.PersonId)
                 .HasName("IX_Event_PersonId_NN");
 
-            builder.HasIndex(e => new { e.DateDateFrom, e.DateDateTo })
-                .HasName("IX_Event_DateFrom_DateTo_NN");
-
-            builder.HasIndex(e => new { e.EventTypeId, e.DateDateTo })
-                .HasName("IX_Event_EventTypeId_DateTo_NN");
-
             builder.HasIndex(e => new { e.PersonId, e.EventTypeId })
                 .HasName("IX_Event_EventTypeId_DateFrom_DateTo_NN");
 
             builder.Property(e => e.CreatedDate).HasColumnType("datetime");
 
-            builder.Property(e => e.DateDateFrom).HasColumnName("Date_DateFrom");
-
-            builder.Property(e => e.DateDateLong).HasColumnName("Date_DateLong");
-
-            builder.Property(e => e.DateDatePhrase)
-                .HasColumnName("Date_DatePhrase")
-                .HasMaxLength(255);
-
-            builder.Property(e => e.DateDateString)
-                .HasColumnName("Date_DateString")
+            builder.Property(e => e.EventDate)
                 .HasMaxLength(18)
                 .IsUnicode(false);
-
-            builder.Property(e => e.DateDateTo).HasColumnName("Date_DateTo");
-
-            builder.Property(e => e.DateDatetype).HasColumnName("Date_Datetype");
-
-            builder.Property(e => e.DateIsValid).HasColumnName("Date_IsValid");
 
             builder.Property(e => e.Description).HasMaxLength(255);
 

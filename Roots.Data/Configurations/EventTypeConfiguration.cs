@@ -19,8 +19,6 @@ namespace Roots.Data.Configurations
             builder.Property(e => e.Name)
                 .IsRequired()
                 .HasMaxLength(255);
-
-            builder.Property(e => e.Sentence).HasMaxLength(255);
         }
     }
 }
