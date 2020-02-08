@@ -7,8 +7,11 @@ using System.Threading.Tasks;
 
 namespace Roots.Web.Controllers
 {
+    /// <summary>
+    /// Api endpoints for Person
+    /// </summary>
     [ApiController]
-    [Route("api/person")]
+    [Route("api/[controller]")]
     public class PersonController : ControllerBase
     {
         private readonly IPersonService _personService;
@@ -20,7 +23,10 @@ namespace Roots.Web.Controllers
             _mapper = mapper;
         }
 
-        // GET: api/<controller>
+        /// <summary>
+        /// Gets a list of all persons.
+        /// </summary>
+        /// <returns>A list of Person models with events</returns>
         [HttpGet]
         public async Task<IActionResult> Get()
         {
@@ -32,7 +38,11 @@ namespace Roots.Web.Controllers
             return Ok(_mapper.Map<IEnumerable<PersonVm>>(persons));
         }
 
-        // GET api/<controller>/5
+        /// <summary>
+        /// Gets a specific person.
+        /// </summary>
+        /// <param name="id">The Person Id</param>
+        /// <returns>A Person model with events</returns>
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
         {

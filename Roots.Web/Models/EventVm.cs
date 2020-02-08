@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace Roots.Web.Models
 {
@@ -8,7 +9,11 @@ namespace Roots.Web.Models
         public int EventTypeId { get; set; }
         public int PersonId { get; set; }
         public int PlaceId { get; set; }
+
+        [StringLength(18)]
         public string EventDate { get; set; }
+
+        [StringLength(255)]
         public string Description { get; set; }
         public DateTime? CreatedDate { get; set; }
         public DateTime? ModifiedDate { get; set; }

@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Roots.Web</name>
+    </assembly>
+    <members>
+        <member name="T:Roots.Web.Controllers.EventController">
+            <summary>
+            Api endpoints for Events
+            </summary>
+        </member>
+        <member name="M:Roots.Web.Controllers.EventController.Get">
+            <summary>
+            Get a list of events with event type and place.
+            </summary>
+            <returns>A list of events</returns>
+        </member>
+        <member name="M:Roots.Web.Controllers.EventController.Get(System.Int32)">
+            <summary>
+            Get a specific event with event type and place.
+            </summary>
+            <param name="id">Event Id</param>
+            <returns>An event</returns>
+        </member>
+        <member name="T:Roots.Web.Controllers.PersonController">
+            <summary>
+            Api endpoints for Person
+            </summary>
+        </member>
+        <member name="M:Roots.Web.Controllers.PersonController.Get">
+            <summary>
+            Gets a list of all persons.
+            </summary>
+            <returns>A list of Person models with events</returns>
+        </member>
+        <member name="M:Roots.Web.Controllers.PersonController.Get(System.Int32)">
+            <summary>
+            Gets a specific person.
+            </summary>
+            <param name="id">The Person Id</param>
+            <returns>A Person model with events</returns>
+        </member>
+    </members>
+</doc>

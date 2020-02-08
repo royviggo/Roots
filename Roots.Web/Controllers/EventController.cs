@@ -7,8 +7,11 @@ using System.Threading.Tasks;
 
 namespace Roots.Web.Controllers
 {
+    /// <summary>
+    /// Api endpoints for Events
+    /// </summary>
     [ApiController]
-    [Route("api/event")]
+    [Route("api/[controller]")]
     public class EventController : ControllerBase
     {
         private readonly IEventService _eventService;
@@ -20,7 +23,10 @@ namespace Roots.Web.Controllers
             _mapper = mapper;
         }
 
-        // GET: api/<controller>
+        /// <summary>
+        /// Get a list of events with event type and place.
+        /// </summary>
+        /// <returns>A list of events</returns>
         [HttpGet]
         public async Task<IActionResult> Get()
         {
@@ -32,7 +38,11 @@ namespace Roots.Web.Controllers
             return Ok(_mapper.Map<IEnumerable<EventVm>>(events));
         }
 
-        // GET api/<controller>/5
+        /// <summary>
+        /// Get a specific event with event type and place.
+        /// </summary>
+        /// <param name="id">Event Id</param>
+        /// <returns>An event</returns>
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
         {

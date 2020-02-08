@@ -8,6 +8,8 @@ using Microsoft.OpenApi.Models;
 using Roots.Business;
 using Roots.Data;
 using Roots.Web.Configuration;
+using Swashbuckle.AspNetCore.SwaggerUI;
+using System.IO;
 
 namespace Roots.Web
 {
@@ -29,12 +31,16 @@ namespace Roots.Web
 
             services.AddBusinessLayer();
 
-            services.AddControllers();
+            services.AddRouting(options => options.LowercaseUrls = true);
+            services.AddControllers()
+                .AddNewtonsoftJson();
 
-            services.AddSwaggerGen(x =>
+            services.AddSwaggerGen(options =>
             {
-                x.SwaggerDoc("v1", new OpenApiInfo { Title = "Roots Api", Version = "v1" });
+                options.SwaggerDoc("v1", new OpenApiInfo { Title = "Roots Api", Version = "v1" });
+                options.IncludeXmlComments(Path.Combine(System.AppContext.BaseDirectory, "Roots.Web.xml"));
             });
+            services.AddSwaggerGenNewtonsoftSupport();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -48,14 +54,16 @@ namespace Roots.Web
             var swaggerConfiguration = new SwaggerConfiguration();
             Configuration.GetSection(nameof(SwaggerConfiguration)).Bind(swaggerConfiguration);
 
-            app.UseSwagger(option =>
+            app.UseSwagger(options =>
             {
-                option.RouteTemplate = swaggerConfiguration.JsonRoute;
+                options.RouteTemplate = swaggerConfiguration.JsonRoute;
             });
 
-            app.UseSwaggerUI(option =>
+            app.UseSwaggerUI(options =>
             {
-                option.SwaggerEndpoint(swaggerConfiguration.UIEndpoint, swaggerConfiguration.Description);
+                options.SwaggerEndpoint(swaggerConfiguration.UIEndpoint, swaggerConfiguration.Description);
+                options.DefaultModelRendering(ModelRendering.Model);
+                options.DefaultModelsExpandDepth(3);
             });
 
             app.UseRouting();
