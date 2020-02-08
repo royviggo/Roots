@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GenDateTools;
+using System;
 
 namespace Roots.Business.Models
 {
@@ -8,7 +9,7 @@ namespace Roots.Business.Models
         public int EventTypeId { get; set; }
         public int PersonId { get; set; }
         public int PlaceId { get; set; }
-        public string EventDate { get; set; }
+        public GenDate EventDate { get; set; }
         public string Description { get; set; }
         public DateTime? CreatedDate { get; set; }
         public DateTime? ModifiedDate { get; set; }

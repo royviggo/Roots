@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GenDateTools;
+using System;
 
 namespace Roots.Domain.Models
 {
