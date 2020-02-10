@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Roots.Business.Interfaces;
 using Roots.Web.Models;
+using Roots.Web.Responses;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -35,7 +36,7 @@ namespace Roots.Web.Controllers
             if (persons == null)
                 return BadRequest();
 
-            return Ok(_mapper.Map<IEnumerable<PersonVm>>(persons));
+            return Ok(new PagedResponse<IEnumerable<PersonVm>>(_mapper.Map<IEnumerable<PersonVm>>(persons)));
         }
 
         /// <summary>
@@ -51,7 +52,7 @@ namespace Roots.Web.Controllers
             if (person == null)
                 return BadRequest();
 
-            return Ok(_mapper.Map<PersonVm>(person));
+            return Ok(new Response<PersonVm>(_mapper.Map<PersonVm>(person)));
         }
     }
 }
