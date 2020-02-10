@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
+using Roots.Business.Filters;
 using Roots.Business.Interfaces;
 using Roots.Business.Models;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Roots.Business.Services
@@ -19,9 +21,20 @@ namespace Roots.Business.Services
             _mapper = mapper;
         }
 
-        public async Task<IEnumerable<PersonDto>> GetAllAsync()
+        public async Task<IEnumerable<PersonDto>> GetAllAsync(PersonFilter filter = null)
         {
-            return await _context.Persons.ProjectTo<PersonDto>(_mapper.ConfigurationProvider).ToListAsync();
+            var query = _context.Persons;
+
+            if (filter != null)
+            {
+                if (!string.IsNullOrEmpty(filter.Name))
+                    query.Where(p => p.FirstName.Contains(filter.Name) || p.LastName.Contains(filter.Name));
+
+                if (filter.PageNumber != null && filter.PageSize != null)
+                    query.Skip((int)filter.PageNumber * (int)filter.PageSize).Take((int)filter.PageSize);
+            }
+
+            return await query.ProjectTo<PersonDto>(_mapper.ConfigurationProvider).ToListAsync();
         }
 
         public async Task<PersonDto> GetByIdAsync(int id)
@@ -35,6 +48,5 @@ namespace Roots.Business.Services
 
             return _mapper.Map<PersonDto>(person);
         }
-
     }
 }
