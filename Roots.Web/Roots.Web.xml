@@ -27,7 +27,7 @@
             Api endpoints for Person
             </summary>
         </member>
-        <member name="M:Roots.Web.Controllers.PersonController.Get">
+        <member name="M:Roots.Web.Controllers.PersonController.Get(Roots.Web.Queries.PersonQuery)">
             <summary>
             Gets a list of all persons.
             </summary>

@@ -18,7 +18,7 @@ namespace Roots.Business.Mapping
             CreateMap<Place, PlaceDto>().ReverseMap();
         }
 
-        private GenDate ConvertStringToGenDate(string value) => new GenDate(value);
-        private string ConvertGenDateToString(GenDate genDate) => genDate.ToGenString();
+        private static GenDate ConvertStringToGenDate(string value) => new GenDate(value);
+        private static string ConvertGenDateToString(GenDate genDate) => genDate.ToGenString();
     }
 }

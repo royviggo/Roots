@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Roots.Business.Filters;
 using Roots.Business.Interfaces;
 using Roots.Web.Models;
+using Roots.Web.Queries;
 using Roots.Web.Responses;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -29,14 +31,15 @@ namespace Roots.Web.Controllers
         /// </summary>
         /// <returns>A list of Person models with events</returns>
         [HttpGet]
-        public async Task<IActionResult> Get()
+        public async Task<IActionResult> Get([FromQuery]PersonQuery query)
         {
-            var persons = await _personService.GetAllAsync();
+            var filter = _mapper.Map<PersonQuery, PersonFilter>(query);
+            var persons = await _personService.GetPagedAsync(filter);
 
-            if (persons == null)
+            if (persons.Data == null)
                 return BadRequest();
 
-            return Ok(new PagedResponse<IEnumerable<PersonVm>>(_mapper.Map<IEnumerable<PersonVm>>(persons)));
+            return Ok(_mapper.Map<PagedResponse<IEnumerable<PersonVm>>>(persons));
         }
 
         /// <summary>
