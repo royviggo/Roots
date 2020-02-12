@@ -5,7 +5,6 @@ using Roots.Business.Filters;
 using Roots.Business.Interfaces;
 using Roots.Business.Models;
 using Roots.Business.Responses;
-using Roots.Domain.Models;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -33,11 +32,11 @@ namespace Roots.Business.Services
             var query = _context.Events.AsQueryable();
 
             // query by date
-            if (!string.IsNullOrEmpty(filter.DateFrom))
-                query = query.Where(p => p.EventDate == filter.DateFrom);
+            if (filter.DateFrom != null)
+                query = query.Where(p => p.EventDate == filter.DateFrom.DateString);
 
-            if (!string.IsNullOrEmpty(filter.DateTo))
-                query = query.Where(p => p.EventDate == filter.DateTo);
+            if (filter.DateTo != null)
+                query = query.Where(p => p.EventDate == filter.DateTo.DateString);
 
             // query by eventtype
             if (filter.EventType != null)
@@ -63,6 +62,5 @@ namespace Roots.Business.Services
 
             return _mapper.Map<EventDto>(evnt);
         }
-
     }
 }
