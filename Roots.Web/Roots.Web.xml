@@ -9,9 +9,10 @@
             Api endpoints for Events
             </summary>
         </member>
-        <member name="M:Roots.Web.Controllers.EventController.Get">
+        <member name="M:Roots.Web.Controllers.EventController.Get(Roots.Web.Queries.EventQuery)">
             <summary>
-            Get a list of events with event type and place.
+            Get a list of events with event type and place. Filter on date and event type, 
+            and paging with page number and limit.
             </summary>
             <returns>A list of events</returns>
         </member>
@@ -29,7 +30,7 @@
         </member>
         <member name="M:Roots.Web.Controllers.PersonController.Get(Roots.Web.Queries.PersonQuery)">
             <summary>
-            Gets a list of all persons.
+            Gets a list of all persons. Filter on name, gender and living status, and paging with page number and limit.
             </summary>
             <returns>A list of Person models with events</returns>
         </member>

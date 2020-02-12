@@ -11,6 +11,10 @@ namespace Roots.Web.Mapping
             CreateMap<PersonQuery, PersonFilter>()
                 .ForMember(dest => dest.PageNumber, map => map.MapFrom(source => source.Page))
                 .ForMember(dest => dest.PageSize, map => map.MapFrom(source => source.Limit));
+
+            CreateMap<EventQuery, EventFilter>()
+                .ForMember(dest => dest.PageNumber, map => map.MapFrom(source => source.Page))
+                .ForMember(dest => dest.PageSize, map => map.MapFrom(source => source.Limit));
         }
     }
 }

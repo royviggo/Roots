@@ -1,9 +1,13 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
+using Roots.Business.Filters;
 using Roots.Business.Interfaces;
 using Roots.Business.Models;
+using Roots.Business.Responses;
+using Roots.Domain.Models;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Roots.Business.Services
@@ -24,6 +28,32 @@ namespace Roots.Business.Services
             return await _context.Events.ProjectTo<EventDto>(_mapper.ConfigurationProvider).ToListAsync();
         }
 
+        public async Task<Paged<IEnumerable<EventDto>>> GetPagedAsync(EventFilter filter)
+        {
+            var query = _context.Events.AsQueryable();
+
+            // query by date
+            if (!string.IsNullOrEmpty(filter.DateFrom))
+                query = query.Where(p => p.EventDate == filter.DateFrom);
+
+            if (!string.IsNullOrEmpty(filter.DateTo))
+                query = query.Where(p => p.EventDate == filter.DateTo);
+
+            // query by eventtype
+            if (filter.EventType != null)
+                query = query.Where(p => p.EventTypeId == filter.EventType);
+
+            // paging
+            query = query.Skip(filter.Skip()).Take(filter.Take());
+
+            return new Paged<IEnumerable<EventDto>>
+            {
+                Data = await query.ProjectTo<EventDto>(_mapper.ConfigurationProvider).ToListAsync(),
+                PageNumber = filter.PageNumber,
+                PageSize = filter.PageSize,
+            };
+        }
+
         public async Task<EventDto> GetByIdAsync(int id)
         {
             var evnt = await _context.Events
@@ -33,5 +63,6 @@ namespace Roots.Business.Services
 
             return _mapper.Map<EventDto>(evnt);
         }
+
     }
 }

@@ -27,7 +27,7 @@ namespace Roots.Web.Controllers
         }
 
         /// <summary>
-        /// Gets a list of all persons.
+        /// Gets a list of all persons. Filter on name, gender and living status, and paging with page number and limit.
         /// </summary>
         /// <returns>A list of Person models with events</returns>
         [HttpGet]

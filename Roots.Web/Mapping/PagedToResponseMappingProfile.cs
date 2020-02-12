@@ -14,6 +14,10 @@ namespace Roots.Web.Mapping
             CreateMap<Paged<IEnumerable<PersonDto>>, PagedResponse<IEnumerable<PersonVm>>>()
                 .ForMember(dest => dest.Page, map => map.MapFrom(source => source.PageNumber))
                 .ForMember(dest => dest.Limit, map => map.MapFrom(source => source.PageSize));
+
+            CreateMap<Paged<IEnumerable<EventDto>>, PagedResponse<IEnumerable<EventVm>>>()
+                .ForMember(dest => dest.Page, map => map.MapFrom(source => source.PageNumber))
+                .ForMember(dest => dest.Limit, map => map.MapFrom(source => source.PageSize));
         }
     }
 }

@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Roots.Business.Filters;
 using Roots.Business.Interfaces;
 using Roots.Web.Models;
+using Roots.Web.Queries;
 using Roots.Web.Responses;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -25,18 +27,20 @@ namespace Roots.Web.Controllers
         }
 
         /// <summary>
-        /// Get a list of events with event type and place.
+        /// Get a list of events with event type and place. Filter on date and event type, 
+        /// and paging with page number and limit.
         /// </summary>
         /// <returns>A list of events</returns>
         [HttpGet]
-        public async Task<IActionResult> Get()
+        public async Task<IActionResult> Get([FromQuery]EventQuery query)
         {
-            var events = await _eventService.GetAllAsync();
+            var filter = _mapper.Map<EventQuery, EventFilter>(query);
+            var events = await _eventService.GetPagedAsync(filter);
 
             if (events == null)
                 return BadRequest();
 
-            return Ok(new PagedResponse<IEnumerable<EventVm>>(_mapper.Map<IEnumerable<EventVm>>(events)));
+            return Ok(_mapper.Map<PagedResponse<IEnumerable<EventVm>>>(events));
         }
 
         /// <summary>
