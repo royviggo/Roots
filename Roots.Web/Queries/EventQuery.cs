@@ -1,6 +1,4 @@
-﻿using Roots.Web.Models;
-
-namespace Roots.Web.Queries
+﻿namespace Roots.Web.Queries
 {
     public class EventQuery : PagedQuery
     {
