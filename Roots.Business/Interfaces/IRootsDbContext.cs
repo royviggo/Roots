@@ -1,5 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Roots.Domain.Models;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Roots.Business.Interfaces
 {
@@ -9,5 +11,7 @@ namespace Roots.Business.Interfaces
         DbSet<EventType> EventTypes { get; set; }
         DbSet<Person> Persons { get; set; }
         DbSet<Place> Places { get; set; }
+
+        Task SaveChangesAsync(CancellationToken cancellationToken);
     }
 }

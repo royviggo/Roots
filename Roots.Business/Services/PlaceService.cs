@@ -1,12 +1,17 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
+using Roots.Business.Exceptions;
 using Roots.Business.Filters;
 using Roots.Business.Interfaces;
 using Roots.Business.Models;
+using Roots.Business.Requests;
 using Roots.Business.Responses;
+using Roots.Domain.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Roots.Business.Services
@@ -52,6 +57,53 @@ namespace Roots.Business.Services
                 .FirstOrDefaultAsync(e => e.Id == id);
 
             return _mapper.Map<PlaceDto>(evnt);
+        }
+
+        public async Task<int> Create(PlaceCreateRequest request, CancellationToken cancellationToken)
+        {
+            var entity = new Place
+            {
+                Name = request.Name,
+                CreatedDate = DateTime.Now,
+                ModifiedDate = DateTime.Now,
+            };
+
+            _context.Places.Add(entity);
+
+            await _context.SaveChangesAsync(cancellationToken);
+
+            return entity.Id;
+        }
+
+        public async Task<bool> Update(PlaceUpdateRequest request, CancellationToken cancellationToken)
+        {
+            var entity = await _context.Places.FindAsync(request.Id);
+
+            if (entity == null)
+                throw new NotFoundException(nameof(Place), request.Id);
+
+            entity.Name = request.Name;
+            entity.ModifiedDate = DateTime.Now;
+
+            await _context.SaveChangesAsync(cancellationToken);
+
+            return !cancellationToken.IsCancellationRequested;
+        }
+
+        public async Task<bool> Delete(DeleteRequest request, CancellationToken cancellationToken)
+        {
+            var entity = await _context.Places
+                .Where(entity => entity.Id == request.Id)
+                .SingleOrDefaultAsync(cancellationToken);
+
+            if (entity == null)
+                throw new NotFoundException(nameof(Place), request.Id);
+
+            _context.Places.Remove(entity);
+
+            await _context.SaveChangesAsync(cancellationToken);
+
+            return !cancellationToken.IsCancellationRequested;
         }
     }
 }

@@ -2,6 +2,8 @@
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 using Roots.Business.Interfaces;
+using System.Threading.Tasks;
+using System.Threading;
 
 namespace Roots.Data.Context
 {
@@ -14,11 +16,15 @@ namespace Roots.Data.Context
         public virtual DbSet<Person> Persons { get; set; }
         public virtual DbSet<Place> Places { get; set; }
 
+        Task IRootsDbContext.SaveChangesAsync(CancellationToken cancellationToken)
+        {
+            return base.SaveChangesAsync(cancellationToken);
+        }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
             base.OnModelCreating(builder);
         }
-
     }
 }
