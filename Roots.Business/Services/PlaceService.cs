@@ -66,8 +66,6 @@ namespace Roots.Business.Services
             var entity = new Place
             {
                 Name = request.Name,
-                CreatedDate = DateTime.Now,
-                ModifiedDate = DateTime.Now,
             };
 
             _context.Places.Add(entity);
@@ -77,7 +75,7 @@ namespace Roots.Business.Services
             return entity.Id;
         }
 
-        public async Task<bool> Update(PlaceUpdateRequest request, CancellationToken cancellationToken = default)
+        public async Task<int> Update(PlaceUpdateRequest request, CancellationToken cancellationToken = default)
         {
             var entity = await _context.Places.FindAsync(request.Id, cancellationToken);
 
@@ -85,14 +83,11 @@ namespace Roots.Business.Services
                 throw new NotFoundException(entity, request.Id);
 
             entity.Name = request.Name;
-            entity.ModifiedDate = DateTime.Now;
 
-            await _context.SaveChangesAsync(cancellationToken);
-
-            return !cancellationToken.IsCancellationRequested;
+            return await _context.SaveChangesAsync(cancellationToken);
         }
 
-        public async Task<bool> Delete(DeleteRequest request, CancellationToken cancellationToken = default)
+        public async Task<int> Delete(DeleteRequest request, CancellationToken cancellationToken = default)
         {
             var entity = await _context.Places
                 .Where(entity => entity.Id == request.Id)
@@ -103,9 +98,7 @@ namespace Roots.Business.Services
 
             _context.Places.Remove(entity);
 
-            await _context.SaveChangesAsync(cancellationToken);
-
-            return !cancellationToken.IsCancellationRequested;
+            return await _context.SaveChangesAsync(cancellationToken);
         }
     }
 }

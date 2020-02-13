@@ -73,8 +73,6 @@ namespace Roots.Business.Services
                 LastName = request.LastName,
                 Gender = request.Gender,
                 Status = request.Status,
-                CreatedDate = DateTime.Now,
-                ModifiedDate = DateTime.Now,
             };
 
             _context.Persons.Add(entity);
@@ -84,7 +82,7 @@ namespace Roots.Business.Services
             return entity.Id;
         }
 
-        public async Task<bool> Update(PersonUpdateRequest request, CancellationToken cancellationToken = default)
+        public async Task<int> Update(PersonUpdateRequest request, CancellationToken cancellationToken = default)
         {
             var entity = await _context.Persons.FindAsync(request.Id, cancellationToken);
 
@@ -95,14 +93,11 @@ namespace Roots.Business.Services
             entity.LastName = request.LastName;
             entity.Gender = request.Gender;
             entity.Status = request.Status;
-            entity.ModifiedDate = DateTime.Now;
 
-            await _context.SaveChangesAsync(cancellationToken);
-
-            return !cancellationToken.IsCancellationRequested;
+            return await _context.SaveChangesAsync(cancellationToken);
         }
 
-        public async Task<bool> Delete(DeleteRequest request, CancellationToken cancellationToken = default)
+        public async Task<int> Delete(DeleteRequest request, CancellationToken cancellationToken = default)
         {
             var entity = await _context.Persons
                 .Where(entity => entity.Id == request.Id)
@@ -113,9 +108,7 @@ namespace Roots.Business.Services
 
             _context.Persons.Remove(entity);
 
-            await _context.SaveChangesAsync(cancellationToken);
-
-            return !cancellationToken.IsCancellationRequested;
+            return await _context.SaveChangesAsync(cancellationToken);
         }
     }
 }

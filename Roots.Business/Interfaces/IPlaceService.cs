@@ -14,7 +14,7 @@ namespace Roots.Business.Interfaces
         Task<PlaceDto> GetByIdAsync(int id, CancellationToken cancellationToken = default);
         Task<Paged<IEnumerable<PlaceDto>>> GetPagedAsync(PlaceFilter filter, CancellationToken cancellationToken = default);
         Task<int> Create(PlaceCreateRequest request, CancellationToken cancellationToken = default);
-        Task<bool> Update(PlaceUpdateRequest request, CancellationToken cancellationToken = default);
-        Task<bool> Delete(DeleteRequest request, CancellationToken cancellationToken = default);
+        Task<int> Update(PlaceUpdateRequest request, CancellationToken cancellationToken = default);
+        Task<int> Delete(DeleteRequest request, CancellationToken cancellationToken = default);
     }
 }

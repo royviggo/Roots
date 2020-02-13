@@ -14,7 +14,7 @@ namespace Roots.Business.Interfaces
         Task<Paged<IEnumerable<EventDto>>> GetPagedAsync(EventFilter filter, CancellationToken cancellationToken = default);
         Task<EventDto> GetByIdAsync(int id, CancellationToken cancellationToken = default);
         Task<int> Create(EventCreateRequest request, CancellationToken cancellationToken = default);
-        Task<bool> Update(EventUpdateRequest request, CancellationToken cancellationToken = default);
-        Task<bool> Delete(DeleteRequest request, CancellationToken cancellationToken = default);
+        Task<int> Update(EventUpdateRequest request, CancellationToken cancellationToken = default);
+        Task<int> Delete(DeleteRequest request, CancellationToken cancellationToken = default);
     }
 }

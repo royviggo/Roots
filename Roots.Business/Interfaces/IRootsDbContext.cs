@@ -12,6 +12,6 @@ namespace Roots.Business.Interfaces
         DbSet<Person> Persons { get; set; }
         DbSet<Place> Places { get; set; }
 
-        Task SaveChangesAsync(CancellationToken cancellationToken);
+        Task<int> SaveChangesAsync(CancellationToken cancellationToken);
     }
 }

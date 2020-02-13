@@ -79,8 +79,6 @@ namespace Roots.Business.Services
                 PlaceId = request.PlaceId,
                 EventDate = request.EventDate.DateString,
                 Description = request.Description,
-                CreatedDate = DateTime.Now,
-                ModifiedDate = DateTime.Now,
             };
 
             _context.Events.Add(entity);
@@ -90,7 +88,7 @@ namespace Roots.Business.Services
             return entity.Id;
         }
 
-        public async Task<bool> Update(EventUpdateRequest request, CancellationToken cancellationToken = default)
+        public async Task<int> Update(EventUpdateRequest request, CancellationToken cancellationToken = default)
         {
             var entity = await _context.Events.FindAsync(request.Id, cancellationToken);
 
@@ -102,14 +100,11 @@ namespace Roots.Business.Services
             entity.PlaceId = request.PlaceId;
             entity.EventDate = request.EventDate.DateString;
             entity.Description = request.Description;
-            entity.ModifiedDate = DateTime.Now;
 
-            await _context.SaveChangesAsync(cancellationToken);
-
-            return !cancellationToken.IsCancellationRequested;
+            return await _context.SaveChangesAsync(cancellationToken);
         }
 
-        public async Task<bool> Delete(DeleteRequest request, CancellationToken cancellationToken = default)
+        public async Task<int> Delete(DeleteRequest request, CancellationToken cancellationToken = default)
         {
             var entity = await _context.Events
                 .Where(entity => entity.Id == request.Id)
@@ -120,9 +115,7 @@ namespace Roots.Business.Services
 
             _context.Events.Remove(entity);
 
-            await _context.SaveChangesAsync(cancellationToken);
-
-            return !cancellationToken.IsCancellationRequested;
+            return await _context.SaveChangesAsync(cancellationToken);
         }
     }
 }
