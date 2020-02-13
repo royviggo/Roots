@@ -1,12 +1,17 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
+using Roots.Business.Exceptions;
 using Roots.Business.Filters;
 using Roots.Business.Interfaces;
 using Roots.Business.Models;
+using Roots.Business.Requests;
 using Roots.Business.Responses;
+using Roots.Domain.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Roots.Business.Services
@@ -61,6 +66,61 @@ namespace Roots.Business.Services
                 .FirstOrDefaultAsync(e => e.Id == id);
 
             return _mapper.Map<EventDto>(evnt);
+        }
+
+        public async Task<int> Create(EventCreateRequest request, CancellationToken cancellationToken)
+        {
+            var entity = new Event
+            {
+                EventTypeId = request.EventTypeId,
+                PersonId = request.PersonId,
+                PlaceId = request.PlaceId,
+                EventDate = request.EventDate.DateString,
+                Description = request.Description,
+                CreatedDate = DateTime.Now,
+                ModifiedDate = DateTime.Now,
+            };
+
+            _context.Events.Add(entity);
+
+            await _context.SaveChangesAsync(cancellationToken);
+
+            return entity.Id;
+        }
+
+        public async Task<bool> Update(EventUpdateRequest request, CancellationToken cancellationToken)
+        {
+            var entity = await _context.Events.FindAsync(request.Id);
+
+            if (entity == null)
+                throw new NotFoundException(nameof(entity), request.Id);
+
+            entity.EventTypeId = request.EventTypeId;
+            entity.PersonId = request.PersonId;
+            entity.PlaceId = request.PlaceId;
+            entity.EventDate = request.EventDate.DateString;
+            entity.Description = request.Description;
+            entity.ModifiedDate = DateTime.Now;
+
+            await _context.SaveChangesAsync(cancellationToken);
+
+            return !cancellationToken.IsCancellationRequested;
+        }
+
+        public async Task<bool> Delete(DeleteRequest request, CancellationToken cancellationToken)
+        {
+            var entity = await _context.Events
+                .Where(entity => entity.Id == request.Id)
+                .SingleOrDefaultAsync(cancellationToken);
+
+            if (entity == null)
+                throw new NotFoundException(nameof(entity), request.Id);
+
+            _context.Events.Remove(entity);
+
+            await _context.SaveChangesAsync(cancellationToken);
+
+            return !cancellationToken.IsCancellationRequested;
         }
     }
 }
