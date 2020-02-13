@@ -1,9 +1,8 @@
-﻿using GenDateTools;
-using System;
+﻿using Roots.Domain.Common;
 
 namespace Roots.Domain.Models
 {
-    public class Event
+    public class Event : AuditableEntity
     {
         public int Id { get; set; }
         public int EventTypeId { get; set; }
@@ -11,8 +10,6 @@ namespace Roots.Domain.Models
         public int PlaceId { get; set; }
         public string EventDate { get; set; }
         public string Description { get; set; }
-        public DateTime? CreatedDate { get; set; }
-        public DateTime? ModifiedDate { get; set; }
 
         public virtual EventType EventType { get; set; }
         public virtual Person Person { get; set; }

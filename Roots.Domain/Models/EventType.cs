@@ -1,9 +1,9 @@
-﻿using System;
+﻿using Roots.Domain.Common;
 using System.Collections.Generic;
 
 namespace Roots.Domain.Models
 {
-    public class EventType
+    public class EventType : AuditableEntity
     {
         public EventType()
         {
@@ -14,8 +14,6 @@ namespace Roots.Domain.Models
         public bool IsFamilyEvent { get; set; }
         public string Name { get; set; }
         public string GedcomTag { get; set; }
-        public DateTime? CreatedDate { get; set; }
-        public DateTime? ModifiedDate { get; set; }
 
         public virtual ICollection<Event> Event { get; set; }
     }

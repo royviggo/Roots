@@ -1,9 +1,9 @@
-﻿using System;
+﻿using Roots.Domain.Common;
 using System.Collections.Generic;
 
 namespace Roots.Domain.Models
 {
-    public class Person
+    public class Person : AuditableEntity
     {
         public Person()
         {
@@ -15,8 +15,6 @@ namespace Roots.Domain.Models
         public string LastName { get; set; }
         public int? Gender { get; set; }
         public int? Status { get; set; }
-        public DateTime? CreatedDate { get; set; }
-        public DateTime? ModifiedDate { get; set; }
 
         public virtual ICollection<Event> Events { get; set; }
     }

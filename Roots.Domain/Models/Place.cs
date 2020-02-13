@@ -1,9 +1,9 @@
-﻿using System;
+﻿using Roots.Domain.Common;
 using System.Collections.Generic;
 
 namespace Roots.Domain.Models
 {
-    public class Place
+    public class Place : AuditableEntity
     {
         public Place()
         {
@@ -12,8 +12,6 @@ namespace Roots.Domain.Models
 
         public int Id { get; set; }
         public string Name { get; set; }
-        public DateTime? CreatedDate { get; set; }
-        public DateTime? ModifiedDate { get; set; }
 
         public virtual ICollection<Event> Event { get; set; }
     }
