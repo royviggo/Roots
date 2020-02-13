@@ -10,11 +10,11 @@ namespace Roots.Business.Interfaces
 {
     public interface IEventService
     {
-        Task<IEnumerable<EventDto>> GetAllAsync();
-        Task<Paged<IEnumerable<EventDto>>> GetPagedAsync(EventFilter filter);
-        Task<EventDto> GetByIdAsync(int id);
-        Task<int> Create(EventCreateRequest request, CancellationToken cancellationToken);
-        Task<bool> Update(EventUpdateRequest request, CancellationToken cancellationToken);
-        Task<bool> Delete(DeleteRequest request, CancellationToken cancellationToken);
+        Task<IEnumerable<EventDto>> GetAllAsync(CancellationToken cancellationToken = default);
+        Task<Paged<IEnumerable<EventDto>>> GetPagedAsync(EventFilter filter, CancellationToken cancellationToken = default);
+        Task<EventDto> GetByIdAsync(int id, CancellationToken cancellationToken = default);
+        Task<int> Create(EventCreateRequest request, CancellationToken cancellationToken = default);
+        Task<bool> Update(EventUpdateRequest request, CancellationToken cancellationToken = default);
+        Task<bool> Delete(DeleteRequest request, CancellationToken cancellationToken = default);
     }
 }

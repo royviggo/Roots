@@ -27,12 +27,14 @@ namespace Roots.Business.Services
             _mapper = mapper;
         }
 
-        public async Task<IEnumerable<EventDto>> GetAllAsync()
+        public async Task<IEnumerable<EventDto>> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            return await _context.Events.ProjectTo<EventDto>(_mapper.ConfigurationProvider).ToListAsync();
+            return await _context.Events
+                .ProjectTo<EventDto>(_mapper.ConfigurationProvider)
+                .ToListAsync(cancellationToken);
         }
 
-        public async Task<Paged<IEnumerable<EventDto>>> GetPagedAsync(EventFilter filter)
+        public async Task<Paged<IEnumerable<EventDto>>> GetPagedAsync(EventFilter filter, CancellationToken cancellationToken = default)
         {
             var query = _context.Events.AsQueryable();
 
@@ -52,23 +54,23 @@ namespace Roots.Business.Services
 
             return new Paged<IEnumerable<EventDto>>
             {
-                Data = await query.ProjectTo<EventDto>(_mapper.ConfigurationProvider).ToListAsync(),
+                Data = await query.ProjectTo<EventDto>(_mapper.ConfigurationProvider).ToListAsync(cancellationToken),
                 PageNumber = filter.PageNumber,
                 PageSize = filter.PageSize,
             };
         }
 
-        public async Task<EventDto> GetByIdAsync(int id)
+        public async Task<EventDto> GetByIdAsync(int id, CancellationToken cancellationToken = default)
         {
             var evnt = await _context.Events
                 .Include(e => e.EventType)
                 .Include(e => e.Place)
-                .FirstOrDefaultAsync(e => e.Id == id);
+                .SingleOrDefaultAsync(e => e.Id == id, cancellationToken);
 
             return _mapper.Map<EventDto>(evnt);
         }
 
-        public async Task<int> Create(EventCreateRequest request, CancellationToken cancellationToken)
+        public async Task<int> Create(EventCreateRequest request, CancellationToken cancellationToken = default)
         {
             var entity = new Event
             {
@@ -88,9 +90,9 @@ namespace Roots.Business.Services
             return entity.Id;
         }
 
-        public async Task<bool> Update(EventUpdateRequest request, CancellationToken cancellationToken)
+        public async Task<bool> Update(EventUpdateRequest request, CancellationToken cancellationToken = default)
         {
-            var entity = await _context.Events.FindAsync(request.Id);
+            var entity = await _context.Events.FindAsync(request.Id, cancellationToken);
 
             if (entity == null)
                 throw new NotFoundException(entity, request.Id);
@@ -107,7 +109,7 @@ namespace Roots.Business.Services
             return !cancellationToken.IsCancellationRequested;
         }
 
-        public async Task<bool> Delete(DeleteRequest request, CancellationToken cancellationToken)
+        public async Task<bool> Delete(DeleteRequest request, CancellationToken cancellationToken = default)
         {
             var entity = await _context.Events
                 .Where(entity => entity.Id == request.Id)

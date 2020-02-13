@@ -27,12 +27,14 @@ namespace Roots.Business.Services
             _mapper = mapper;
         }
 
-        public async Task<IEnumerable<PlaceDto>> GetAllAsync()
+        public async Task<IEnumerable<PlaceDto>> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            return await _context.Places.ProjectTo<PlaceDto>(_mapper.ConfigurationProvider).ToListAsync();
+            return await _context
+                .Places.ProjectTo<PlaceDto>(_mapper.ConfigurationProvider)
+                .ToListAsync(cancellationToken);
         }
 
-        public async Task<Paged<IEnumerable<PlaceDto>>> GetPagedAsync(PlaceFilter filter)
+        public async Task<Paged<IEnumerable<PlaceDto>>> GetPagedAsync(PlaceFilter filter, CancellationToken cancellationToken = default)
         {
             var query = _context.Places.AsQueryable();
 
@@ -45,21 +47,21 @@ namespace Roots.Business.Services
 
             return new Paged<IEnumerable<PlaceDto>>
             {
-                Data = await query.ProjectTo<PlaceDto>(_mapper.ConfigurationProvider).ToListAsync(),
+                Data = await query.ProjectTo<PlaceDto>(_mapper.ConfigurationProvider).ToListAsync(cancellationToken),
                 PageNumber = filter.PageNumber,
                 PageSize = filter.PageSize,
             };
         }
 
-        public async Task<PlaceDto> GetByIdAsync(int id)
+        public async Task<PlaceDto> GetByIdAsync(int id, CancellationToken cancellationToken = default)
         {
             var evnt = await _context.Places
-                .FirstOrDefaultAsync(e => e.Id == id);
+                .SingleOrDefaultAsync(e => e.Id == id, cancellationToken);
 
             return _mapper.Map<PlaceDto>(evnt);
         }
 
-        public async Task<int> Create(PlaceCreateRequest request, CancellationToken cancellationToken)
+        public async Task<int> Create(PlaceCreateRequest request, CancellationToken cancellationToken = default)
         {
             var entity = new Place
             {
@@ -75,9 +77,9 @@ namespace Roots.Business.Services
             return entity.Id;
         }
 
-        public async Task<bool> Update(PlaceUpdateRequest request, CancellationToken cancellationToken)
+        public async Task<bool> Update(PlaceUpdateRequest request, CancellationToken cancellationToken = default)
         {
-            var entity = await _context.Places.FindAsync(request.Id);
+            var entity = await _context.Places.FindAsync(request.Id, cancellationToken);
 
             if (entity == null)
                 throw new NotFoundException(entity, request.Id);
@@ -90,7 +92,7 @@ namespace Roots.Business.Services
             return !cancellationToken.IsCancellationRequested;
         }
 
-        public async Task<bool> Delete(DeleteRequest request, CancellationToken cancellationToken)
+        public async Task<bool> Delete(DeleteRequest request, CancellationToken cancellationToken = default)
         {
             var entity = await _context.Places
                 .Where(entity => entity.Id == request.Id)

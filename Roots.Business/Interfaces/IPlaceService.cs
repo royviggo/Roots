@@ -10,11 +10,11 @@ namespace Roots.Business.Interfaces
 {
     public interface IPlaceService
     {
-        Task<IEnumerable<PlaceDto>> GetAllAsync();
-        Task<PlaceDto> GetByIdAsync(int id);
-        Task<Paged<IEnumerable<PlaceDto>>> GetPagedAsync(PlaceFilter filter);
-        Task<int> Create(PlaceCreateRequest request, CancellationToken cancellationToken);
-        Task<bool> Update(PlaceUpdateRequest request, CancellationToken cancellationToken);
-        Task<bool> Delete(DeleteRequest request, CancellationToken cancellationToken);
+        Task<IEnumerable<PlaceDto>> GetAllAsync(CancellationToken cancellationToken = default);
+        Task<PlaceDto> GetByIdAsync(int id, CancellationToken cancellationToken = default);
+        Task<Paged<IEnumerable<PlaceDto>>> GetPagedAsync(PlaceFilter filter, CancellationToken cancellationToken = default);
+        Task<int> Create(PlaceCreateRequest request, CancellationToken cancellationToken = default);
+        Task<bool> Update(PlaceUpdateRequest request, CancellationToken cancellationToken = default);
+        Task<bool> Delete(DeleteRequest request, CancellationToken cancellationToken = default);
     }
 }

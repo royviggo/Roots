@@ -27,14 +27,14 @@ namespace Roots.Business.Services
             _mapper = mapper;
         }
 
-        public async Task<IEnumerable<PersonDto>> GetAllAsync()
+        public async Task<IEnumerable<PersonDto>> GetAllAsync(CancellationToken cancellationToken = default)
         {
             var query = _context.Persons;
 
-            return await query.ProjectTo<PersonDto>(_mapper.ConfigurationProvider).ToListAsync();
+            return await query.ProjectTo<PersonDto>(_mapper.ConfigurationProvider).ToListAsync(cancellationToken);
         }
 
-        public async Task<Paged<IEnumerable<PersonDto>>> GetPagedAsync(PersonFilter filter)
+        public async Task<Paged<IEnumerable<PersonDto>>> GetPagedAsync(PersonFilter filter, CancellationToken cancellationToken = default)
         {
             var query = _context.Persons.AsQueryable();
 
@@ -47,25 +47,25 @@ namespace Roots.Business.Services
 
             return new Paged<IEnumerable<PersonDto>>
             {
-                Data = await query.ProjectTo<PersonDto>(_mapper.ConfigurationProvider).ToListAsync(),
+                Data = await query.ProjectTo<PersonDto>(_mapper.ConfigurationProvider).ToListAsync(cancellationToken),
                 PageNumber = filter.PageNumber,
                 PageSize = filter.PageSize,
             };
         }
 
-        public async Task<PersonDto> GetByIdAsync(int id)
+        public async Task<PersonDto> GetByIdAsync(int id, CancellationToken cancellationToken = default)
         {
             var person = await _context.Persons
                 .Include(p => p.Events)
                 .ThenInclude(e => e.EventType)
                 .Include(p => p.Events)
                 .ThenInclude(e => e.Place)
-                .FirstOrDefaultAsync(p => p.Id == id);
+                .SingleOrDefaultAsync(p => p.Id == id, cancellationToken);
 
             return _mapper.Map<PersonDto>(person);
         }
 
-        public async Task<int> Create(PersonCreateRequest request, CancellationToken cancellationToken)
+        public async Task<int> Create(PersonCreateRequest request, CancellationToken cancellationToken = default)
         {
             var entity = new Person
             {
@@ -84,9 +84,9 @@ namespace Roots.Business.Services
             return entity.Id;
         }
 
-        public async Task<bool> Update(PersonUpdateRequest request, CancellationToken cancellationToken)
+        public async Task<bool> Update(PersonUpdateRequest request, CancellationToken cancellationToken = default)
         {
-            var entity = await _context.Persons.FindAsync(request.Id);
+            var entity = await _context.Persons.FindAsync(request.Id, cancellationToken);
 
             if (entity == null)
                 throw new NotFoundException(entity, request.Id);
@@ -102,7 +102,7 @@ namespace Roots.Business.Services
             return !cancellationToken.IsCancellationRequested;
         }
 
-        public async Task<bool> Delete(DeleteRequest request, CancellationToken cancellationToken)
+        public async Task<bool> Delete(DeleteRequest request, CancellationToken cancellationToken = default)
         {
             var entity = await _context.Persons
                 .Where(entity => entity.Id == request.Id)
