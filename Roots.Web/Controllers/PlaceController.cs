@@ -45,7 +45,7 @@ namespace Roots.Web.Controllers
         /// <summary>
         /// Gets a specific place.
         /// </summary>
-        /// <param name="id">The Person Id</param>
+        /// <param name="id">The Place Id</param>
         /// <returns>A Place model</returns>
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
