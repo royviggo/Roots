@@ -10,12 +10,10 @@ namespace Roots.Data.Context
 {
     public partial class RootsDbContext : DbContext, IRootsDbContext
     {
-        private readonly ICurrentUser _currentUser;
-        private readonly IDateTime _dateTime;
+        private readonly IDateTimeService _dateTime;
 
-        public RootsDbContext(DbContextOptions<RootsDbContext> options, ICurrentUser currentUser, IDateTime dateTime) : base(options)
+        public RootsDbContext(DbContextOptions<RootsDbContext> options, IDateTimeService dateTime) : base(options)
         {
-            _currentUser = currentUser;
             _dateTime = dateTime;
         }
 

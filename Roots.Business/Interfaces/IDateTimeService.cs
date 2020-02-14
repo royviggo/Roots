@@ -2,7 +2,7 @@
 
 namespace Roots.Business.Interfaces
 {
-    public interface IDateTime
+    public interface IDateTimeService
     {
         DateTime Now { get; }
     }
