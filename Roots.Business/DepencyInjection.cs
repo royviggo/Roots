@@ -9,6 +9,7 @@ namespace Roots.Business
         public static IServiceCollection AddBusinessLayer(this IServiceCollection services)
         {
             services.AddScoped<IEventService, EventService>();
+            services.AddScoped<IEventTypeService, EventTypeService>();
             services.AddScoped<IPersonService, PersonService>();
             services.AddScoped<IPlaceService, PlaceService>();
 
