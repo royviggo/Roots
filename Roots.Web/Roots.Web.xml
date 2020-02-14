@@ -23,6 +23,25 @@
             <param name="id">Event Id</param>
             <returns>An event</returns>
         </member>
+        <member name="T:Roots.Web.Controllers.EventTypeController">
+            <summary>
+            Api endpoints for EventTypes
+            </summary>
+        </member>
+        <member name="M:Roots.Web.Controllers.EventTypeController.Get(Roots.Web.Queries.EventTypeQuery)">
+            <summary>
+            Get a list of eventtypes. Filter on name, Gedcomtag and family event. 
+            Paging with page number and limit.
+            </summary>
+            <returns>A list of event types</returns>
+        </member>
+        <member name="M:Roots.Web.Controllers.EventTypeController.Get(System.Int32)">
+            <summary>
+            Get a specific eventtype.
+            </summary>
+            <param name="id">Event Id</param>
+            <returns>An eventtype</returns>
+        </member>
         <member name="T:Roots.Web.Controllers.PersonController">
             <summary>
             Api endpoints for Person
