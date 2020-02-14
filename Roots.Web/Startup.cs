@@ -64,6 +64,7 @@ namespace Roots.Web
                 options.SwaggerEndpoint(swaggerConfiguration.UIEndpoint, swaggerConfiguration.Description);
                 options.DefaultModelRendering(ModelRendering.Model);
                 options.DefaultModelsExpandDepth(3);
+                options.DocExpansion(DocExpansion.List);
             });
 
             app.UseRouting();

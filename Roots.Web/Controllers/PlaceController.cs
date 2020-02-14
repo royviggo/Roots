@@ -2,7 +2,9 @@
 using Microsoft.AspNetCore.Mvc;
 using Roots.Business.Filters;
 using Roots.Business.Interfaces;
+using Roots.Business.Requests;
 using Roots.Web.Models;
+using Roots.Web.InputModels;
 using Roots.Web.Queries;
 using Roots.Web.Responses;
 using System.Collections.Generic;
@@ -56,6 +58,45 @@ namespace Roots.Web.Controllers
                 return BadRequest();
 
             return Ok(new Response<PlaceVm>(_mapper.Map<PlaceVm>(place)));
+        }
+
+        /// <summary>
+        /// Create a new place.
+        /// </summary>
+        /// <param name="model">The Place create model</param>
+        /// <returns>Inserted id</returns>
+        [HttpPost]
+        public async Task<ActionResult<int>> Create([FromBody]PlaceCreateModel model)
+        {
+            var request = _mapper.Map<PlaceCreateModel, PlaceCreateRequest>(model);
+
+            return await _placeService.Create(request);
+        }
+
+        /// <summary>
+        /// Updates a place.
+        /// </summary>
+        /// <param name="model">The Place update model</param>
+        /// <returns>Number of records updated</returns>
+        [HttpPut]
+        public async Task<ActionResult<int>> Update([FromBody]PlaceUpdateModel model)
+        {
+            var request = _mapper.Map<PlaceUpdateModel, PlaceUpdateRequest>(model);
+
+            return await _placeService.Update(request);
+        }
+
+        /// <summary>
+        /// Delete a place.
+        /// </summary>
+        /// <param name="model">The Place delete model</param>
+        /// <returns>Number of records deleted</returns>
+        [HttpDelete]
+        public async Task<ActionResult<int>> Delete([FromBody]DeleteModel model)
+        {
+            var request = _mapper.Map<DeleteModel, DeleteRequest>(model);
+
+            return await _placeService.Delete(request);
         }
     }
 }

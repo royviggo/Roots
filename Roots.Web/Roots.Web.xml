@@ -42,6 +42,27 @@
             <param name="id">Event Id</param>
             <returns>An eventtype</returns>
         </member>
+        <member name="M:Roots.Web.Controllers.EventTypeController.Create(Roots.Web.InputModels.EventTypeCreateModel)">
+            <summary>
+            Create a new EventType.
+            </summary>
+            <param name="model">The EventType create model</param>
+            <returns>Inserted id</returns>
+        </member>
+        <member name="M:Roots.Web.Controllers.EventTypeController.Update(Roots.Web.InputModels.EventTypeUpdateModel)">
+            <summary>
+            Updates a EventType.
+            </summary>
+            <param name="model">The EventType update model</param>
+            <returns>Number of records updated</returns>
+        </member>
+        <member name="M:Roots.Web.Controllers.EventTypeController.Delete(Roots.Web.InputModels.DeleteModel)">
+            <summary>
+            Delete a EventType.
+            </summary>
+            <param name="model">The EventType delete model</param>
+            <returns>Number of records deleted</returns>
+        </member>
         <member name="T:Roots.Web.Controllers.PersonController">
             <summary>
             Api endpoints for Person
@@ -77,6 +98,27 @@
             </summary>
             <param name="id">The Place Id</param>
             <returns>A Place model</returns>
+        </member>
+        <member name="M:Roots.Web.Controllers.PlaceController.Create(Roots.Web.InputModels.PlaceCreateModel)">
+            <summary>
+            Create a new place.
+            </summary>
+            <param name="model">The Place create model</param>
+            <returns>Inserted id</returns>
+        </member>
+        <member name="M:Roots.Web.Controllers.PlaceController.Update(Roots.Web.InputModels.PlaceUpdateModel)">
+            <summary>
+            Updates a place.
+            </summary>
+            <param name="model">The Place update model</param>
+            <returns>Number of records updated</returns>
+        </member>
+        <member name="M:Roots.Web.Controllers.PlaceController.Delete(Roots.Web.InputModels.DeleteModel)">
+            <summary>
+            Delete a place.
+            </summary>
+            <param name="model">The Place delete model</param>
+            <returns>Number of records deleted</returns>
         </member>
     </members>
 </doc>

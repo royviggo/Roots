@@ -77,7 +77,7 @@ namespace Roots.Business.Services
 
         public async Task<int> Update(PlaceUpdateRequest request, CancellationToken cancellationToken = default)
         {
-            var entity = await _context.Places.FindAsync(request.Id, cancellationToken);
+            var entity = await _context.Places.FindAsync(request.Id);
 
             if (entity == null)
                 throw new NotFoundException(entity, request.Id);
