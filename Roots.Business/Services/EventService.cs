@@ -8,7 +8,6 @@ using Roots.Business.Models;
 using Roots.Business.Requests;
 using Roots.Business.Responses;
 using Roots.Domain.Models;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -90,7 +89,7 @@ namespace Roots.Business.Services
 
         public async Task<int> Update(EventUpdateRequest request, CancellationToken cancellationToken = default)
         {
-            var entity = await _context.Events.FindAsync(request.Id, cancellationToken);
+            var entity = await _context.Events.FindAsync(request.Id);
 
             if (entity == null)
                 throw new NotFoundException(entity, request.Id);
