@@ -8,6 +8,9 @@ namespace Roots.Web.Mapping
     {
         public ModelToRequestMappingProfile()
         {
+            CreateMap<EventCreateModel, EventCreateRequest>();
+            CreateMap<EventUpdateModel, EventUpdateRequest>();
+
             CreateMap<EventTypeCreateModel, EventTypeCreateRequest>();
             CreateMap<EventTypeUpdateModel, EventTypeUpdateRequest>();
 

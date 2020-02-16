@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Roots.Business.Filters;
 using Roots.Business.Interfaces;
+using Roots.Business.Requests;
+using Roots.Web.InputModels;
 using Roots.Web.Models;
 using Roots.Web.Queries;
 using Roots.Web.Responses;
@@ -57,6 +59,45 @@ namespace Roots.Web.Controllers
                 return NotFound();
 
             return Ok(new Response<EventVm>(_mapper.Map<EventVm>(evnt)));
+        }
+
+        /// <summary>
+        /// Creates a new Event.
+        /// </summary>
+        /// <param name="model">The Event create model</param>
+        /// <returns>Inserted id</returns>
+        [HttpPost]
+        public async Task<ActionResult<int>> Create([FromBody]EventCreateModel model)
+        {
+            var request = _mapper.Map<EventCreateModel, EventCreateRequest>(model);
+
+            return await _eventService.Create(request);
+        }
+
+        /// <summary>
+        /// Updates an Event.
+        /// </summary>
+        /// <param name="model">The Event update model</param>
+        /// <returns>Number of records updated</returns>
+        [HttpPut]
+        public async Task<ActionResult<int>> Update([FromBody]EventUpdateModel model)
+        {
+            var request = _mapper.Map<EventUpdateModel, EventUpdateRequest>(model);
+
+            return await _eventService.Update(request);
+        }
+
+        /// <summary>
+        /// Delete an Event.
+        /// </summary>
+        /// <param name="model">The Event delete model</param>
+        /// <returns>Number of records deleted</returns>
+        [HttpDelete]
+        public async Task<ActionResult<int>> Delete([FromBody]DeleteModel model)
+        {
+            var request = _mapper.Map<DeleteModel, DeleteRequest>(model);
+
+            return await _eventService.Delete(request);
         }
     }
 }
