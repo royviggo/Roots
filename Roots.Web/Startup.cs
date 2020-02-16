@@ -33,14 +33,13 @@ namespace Roots.Web
 
             services.AddRouting(options => options.LowercaseUrls = true);
             services.AddControllers()
-                .AddNewtonsoftJson();
+                .AddJsonOptions(options => options.JsonSerializerOptions.PropertyNamingPolicy = null);
 
             services.AddSwaggerGen(options =>
             {
                 options.SwaggerDoc("v1", new OpenApiInfo { Title = "Roots Api", Version = "v1" });
                 options.IncludeXmlComments(Path.Combine(System.AppContext.BaseDirectory, "Roots.Web.xml"));
             });
-            services.AddSwaggerGenNewtonsoftSupport();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -62,8 +61,8 @@ namespace Roots.Web
             app.UseSwaggerUI(options =>
             {
                 options.SwaggerEndpoint(swaggerConfiguration.UIEndpoint, swaggerConfiguration.Description);
-                options.DefaultModelRendering(ModelRendering.Model);
-                options.DefaultModelsExpandDepth(3);
+                options.DefaultModelRendering(ModelRendering.Example);
+                options.DefaultModelsExpandDepth(4);
                 options.DocExpansion(DocExpansion.List);
             });
 
