@@ -92,7 +92,7 @@ namespace Roots.Business.Services
             var entity = await _context.Events.FindAsync(request.Id);
 
             if (entity == null)
-                throw new NotFoundException(entity, request.Id);
+                throw new NotFoundException();
 
             entity.EventTypeId = request.EventTypeId;
             entity.PersonId = request.PersonId;
@@ -110,7 +110,7 @@ namespace Roots.Business.Services
                 .SingleOrDefaultAsync(cancellationToken);
 
             if (entity == null)
-                throw new NotFoundException(entity, request.Id);
+                throw new NotFoundException();
 
             _context.Events.Remove(entity);
 
