@@ -1,8 +1,11 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Roots.Business.Exceptions;
 using Roots.Business.Filters;
 using Roots.Business.Interfaces;
 using Roots.Business.Requests;
+using Roots.Business.Responses;
 using Roots.Web.InputModels;
 using Roots.Web.Models;
 using Roots.Web.Queries;
@@ -34,7 +37,9 @@ namespace Roots.Web.Controllers
         /// </summary>
         /// <returns>A list of events</returns>
         [HttpGet]
-        public async Task<IActionResult> Get([FromQuery]EventQuery query)
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<EventVm>> Get([FromQuery]EventQuery query)
         {
             var filter = _mapper.Map<EventQuery, EventFilter>(query);
             var events = await _eventService.GetPagedAsync(filter);
@@ -51,7 +56,9 @@ namespace Roots.Web.Controllers
         /// <param name="id">Event Id</param>
         /// <returns>An event</returns>
         [HttpGet("{id}")]
-        public async Task<IActionResult> Get(int id)
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<EventVm>> Get(int id)
         {
             var evnt = await _eventService.GetByIdAsync(id);
 
@@ -67,37 +74,84 @@ namespace Roots.Web.Controllers
         /// <param name="model">The Event create model</param>
         /// <returns>Inserted id</returns>
         [HttpPost]
-        public async Task<ActionResult<int>> Create([FromBody]EventCreateModel model)
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<CreatedModel>> Create([FromBody]EventCreateModel model)
         {
             var request = _mapper.Map<EventCreateModel, EventCreateRequest>(model);
 
-            return await _eventService.Create(request);
+            if (request == null)
+                return BadRequest();
+
+            try
+            {
+                var result = await _eventService.Create(request);
+                return Created(nameof(Get), new CreatedModel { Id = result });
+            }
+            catch
+            {
+                return BadRequest();
+            }
         }
 
         /// <summary>
         /// Updates an Event.
         /// </summary>
+        /// <param name="id">Event Id</param>
         /// <param name="model">The Event update model</param>
-        /// <returns>Number of records updated</returns>
-        [HttpPut]
-        public async Task<ActionResult<int>> Update([FromBody]EventUpdateModel model)
+        /// <returns>No content</returns>
+        [HttpPut("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> Update(int id, [FromBody]EventUpdateModel model)
         {
             var request = _mapper.Map<EventUpdateModel, EventUpdateRequest>(model);
 
-            return await _eventService.Update(request);
+            if (request == null || id != request.Id)
+                return BadRequest();
+
+            try
+            {
+                await _eventService.Update(request);
+                return NoContent();
+            }
+            catch (NotFoundException)
+            {
+                return NotFound();
+            }
+            catch
+            {
+                return BadRequest();
+            }
         }
 
         /// <summary>
         /// Delete an Event.
         /// </summary>
-        /// <param name="model">The Event delete model</param>
-        /// <returns>Number of records deleted</returns>
-        [HttpDelete]
-        public async Task<ActionResult<int>> Delete([FromBody]DeleteModel model)
+        /// <param name="id">Event Id</param>
+        /// <returns>No content</returns>
+        [HttpDelete("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> Delete(int id)
         {
-            var request = _mapper.Map<DeleteModel, DeleteRequest>(model);
+            var request = new DeleteRequest { Id = id };
 
-            return await _eventService.Delete(request);
+            try
+            {
+                await _eventService.Delete(request);
+                return NoContent();
+            }
+            catch (NotFoundException)
+            {
+                return NotFound();
+            }
+            catch
+            {
+                return BadRequest();
+            }
         }
     }
 }

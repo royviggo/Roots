@@ -30,19 +30,20 @@
             <param name="model">The Event create model</param>
             <returns>Inserted id</returns>
         </member>
-        <member name="M:Roots.Web.Controllers.EventController.Update(Roots.Web.InputModels.EventUpdateModel)">
+        <member name="M:Roots.Web.Controllers.EventController.Update(System.Int32,Roots.Web.InputModels.EventUpdateModel)">
             <summary>
             Updates an Event.
             </summary>
+            <param name="id">Event Id</param>
             <param name="model">The Event update model</param>
-            <returns>Number of records updated</returns>
+            <returns>No content</returns>
         </member>
-        <member name="M:Roots.Web.Controllers.EventController.Delete(Roots.Web.InputModels.DeleteModel)">
+        <member name="M:Roots.Web.Controllers.EventController.Delete(System.Int32)">
             <summary>
             Delete an Event.
             </summary>
-            <param name="model">The Event delete model</param>
-            <returns>Number of records deleted</returns>
+            <param name="id">Event Id</param>
+            <returns>No content</returns>
         </member>
         <member name="T:Roots.Web.Controllers.EventTypeController">
             <summary>
