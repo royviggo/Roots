@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Roots.Business.Filters;
 using Roots.Business.Interfaces;
+using Roots.Business.Requests;
+using Roots.Web.InputModels;
 using Roots.Web.Models;
 using Roots.Web.Queries;
 using Roots.Web.Responses;
@@ -56,6 +58,45 @@ namespace Roots.Web.Controllers
                 return BadRequest();
 
             return Ok(new Response<PersonVm>(_mapper.Map<PersonVm>(person)));
+        }
+
+        /// <summary>
+        /// Create a new person.
+        /// </summary>
+        /// <param name="model">The Person create model</param>
+        /// <returns>Inserted id</returns>
+        [HttpPost]
+        public async Task<ActionResult<int>> Create([FromBody]PersonCreateModel model)
+        {
+            var request = _mapper.Map<PersonCreateModel, PersonCreateRequest>(model);
+
+            return await _personService.Create(request);
+        }
+
+        /// <summary>
+        /// Updates a person.
+        /// </summary>
+        /// <param name="model">The Person update model</param>
+        /// <returns>Number of records updated</returns>
+        [HttpPut]
+        public async Task<ActionResult<int>> Update([FromBody]PersonUpdateModel model)
+        {
+            var request = _mapper.Map<PersonUpdateModel, PersonUpdateRequest>(model);
+
+            return await _personService.Update(request);
+        }
+
+        /// <summary>
+        /// Delete a person.
+        /// </summary>
+        /// <param name="model">The Person delete model</param>
+        /// <returns>Number of records deleted</returns>
+        [HttpDelete]
+        public async Task<ActionResult<int>> Delete([FromBody]DeleteModel model)
+        {
+            var request = _mapper.Map<DeleteModel, DeleteRequest>(model);
+
+            return await _personService.Delete(request);
         }
     }
 }

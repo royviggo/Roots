@@ -14,6 +14,9 @@ namespace Roots.Web.Mapping
             CreateMap<EventTypeCreateModel, EventTypeCreateRequest>();
             CreateMap<EventTypeUpdateModel, EventTypeUpdateRequest>();
 
+            CreateMap<PersonCreateModel, PersonCreateRequest>();
+            CreateMap<PersonUpdateModel, PersonUpdateRequest>();
+
             CreateMap<PlaceCreateModel, PlaceCreateRequest>();
             CreateMap<PlaceUpdateModel, PlaceUpdateRequest>();
 

@@ -102,6 +102,27 @@
             <param name="id">The Person Id</param>
             <returns>A Person model with events</returns>
         </member>
+        <member name="M:Roots.Web.Controllers.PersonController.Create(Roots.Web.InputModels.PersonCreateModel)">
+            <summary>
+            Create a new person.
+            </summary>
+            <param name="model">The Person create model</param>
+            <returns>Inserted id</returns>
+        </member>
+        <member name="M:Roots.Web.Controllers.PersonController.Update(Roots.Web.InputModels.PersonUpdateModel)">
+            <summary>
+            Updates a person.
+            </summary>
+            <param name="model">The Person update model</param>
+            <returns>Number of records updated</returns>
+        </member>
+        <member name="M:Roots.Web.Controllers.PersonController.Delete(Roots.Web.InputModels.DeleteModel)">
+            <summary>
+            Delete a person.
+            </summary>
+            <param name="model">The Person delete model</param>
+            <returns>Number of records deleted</returns>
+        </member>
         <member name="T:Roots.Web.Controllers.PlaceController">
             <summary>
             Api endpoints for Place
