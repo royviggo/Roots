@@ -55,7 +55,7 @@ namespace Roots.Web.Controllers
             var person = await _personService.GetByIdAsync(id);
 
             if (person == null)
-                return BadRequest();
+                return NotFound();
 
             return Ok(new Response<PersonVm>(_mapper.Map<PersonVm>(person)));
         }

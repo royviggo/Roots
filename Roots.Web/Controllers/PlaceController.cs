@@ -55,7 +55,7 @@ namespace Roots.Web.Controllers
             var place = await _placeService.GetByIdAsync(id);
 
             if (place == null)
-                return BadRequest();
+                return NotFound();
 
             return Ok(new Response<PlaceVm>(_mapper.Map<PlaceVm>(place)));
         }
