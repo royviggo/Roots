@@ -19,6 +19,7 @@ namespace Roots.Web.Mapping
                 .ForMember(dest => dest.PageSize, map => map.MapFrom(source => source.Limit))
                 .ForMember(dest => dest.DateFrom, map => map.MapFrom(source => ConvertDatePartToGenDate(source.DateFrom)))
                 .ForMember(dest => dest.DateTo, map => map.MapFrom(source => ConvertDatePartToGenDate(source.DateTo)));
+                
                 //.ForMember(dest => dest.DateFrom, map => map.MapFrom(source => ConvertStringToGenDate(source.DateFrom)))
                 //.ForMember(dest => dest.DateTo, map => map.MapFrom(source => ConvertStringToGenDate(source.DateTo)))
 
