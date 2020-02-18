@@ -8,7 +8,7 @@ namespace Roots.Domain.Models
         public int EventTypeId { get; set; }
         public int PersonId { get; set; }
         public int PlaceId { get; set; }
-        public string EventDate { get; set; }
+        public long EventDate { get; set; }
         public string Description { get; set; }
 
         public virtual EventType EventType { get; set; }

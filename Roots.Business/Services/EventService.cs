@@ -39,10 +39,10 @@ namespace Roots.Business.Services
 
             // query by date
             if (filter.DateFrom != null)
-                query = query.Where(p => p.EventDate == filter.DateFrom.DateString);
+                query = query.Where(p => p.EventDate >= filter.DateFrom.DateLong);
 
             if (filter.DateTo != null)
-                query = query.Where(p => p.EventDate == filter.DateTo.DateString);
+                query = query.Where(p => p.EventDate <= filter.DateTo.DateLong);
 
             // query by eventtype
             if (filter.EventType != null)
@@ -76,7 +76,7 @@ namespace Roots.Business.Services
                 EventTypeId = request.EventTypeId,
                 PersonId = request.PersonId,
                 PlaceId = request.PlaceId,
-                EventDate = request.EventDate.DateString,
+                EventDate = request.EventDate.DateLong,
                 Description = request.Description,
             };
 
@@ -97,7 +97,7 @@ namespace Roots.Business.Services
             entity.EventTypeId = request.EventTypeId;
             entity.PersonId = request.PersonId;
             entity.PlaceId = request.PlaceId;
-            entity.EventDate = request.EventDate.DateString;
+            entity.EventDate = request.EventDate.DateLong;
             entity.Description = request.Description;
 
             return await _context.SaveChangesAsync(cancellationToken);

@@ -3,7 +3,7 @@
     [EventTypeId]     INT            NOT NULL,
     [PersonId]        INT            NOT NULL,
     [PlaceId]         INT            NOT NULL,
-    [EventDate]       VARCHAR (18)   NULL,
+    [EventDate]       BIGINT         NULL,
     [Description]     NVARCHAR (255) NULL,
     [CreatedDate]     DATETIME       NULL,
     [ModifiedDate]    DATETIME       NULL,

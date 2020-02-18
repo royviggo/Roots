@@ -11,6 +11,8 @@ namespace Roots.Business.Mapping
         {
             CreateMap<string, GenDate>().ConvertUsing(s => ConvertStringToGenDate(s));
             CreateMap<GenDate, string>().ConvertUsing(g => ConvertGenDateToString(g));
+            CreateMap<long, GenDate>().ConvertUsing(l => ConvertLongToGenDate(l));
+            CreateMap<GenDate, long>().ConvertUsing(g => ConvertGenDateToLong(g));
 
             CreateMap<Event, EventDto>().ReverseMap();
             CreateMap<EventType, EventTypeDto>().ReverseMap();
@@ -20,5 +22,7 @@ namespace Roots.Business.Mapping
 
         private static GenDate ConvertStringToGenDate(string value) => value != null ? new GenDate(value) : null;
         private static string ConvertGenDateToString(GenDate genDate) => genDate.ToGenString();
+        private static GenDate ConvertLongToGenDate(long value) => new GenDate(value);
+        private static long ConvertGenDateToLong(GenDate genDate) => genDate.DateLong;
     }
 }
