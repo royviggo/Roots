@@ -80,7 +80,7 @@ namespace Roots.Business.Services
             var entity = await _context.Places.FindAsync(request.Id);
 
             if (entity == null)
-                throw new NotFoundException(entity, request.Id);
+                throw new NotFoundException();
 
             entity.Name = request.Name;
 
@@ -94,7 +94,7 @@ namespace Roots.Business.Services
                 .SingleOrDefaultAsync(cancellationToken);
 
             if (entity == null)
-                throw new NotFoundException(entity, request.Id);
+                throw new NotFoundException();
 
             _context.Places.Remove(entity);
 

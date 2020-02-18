@@ -89,7 +89,7 @@ namespace Roots.Business.Services
             var entity = await _context.EventTypes.FindAsync(request.Id);
 
             if (entity == null)
-                throw new NotFoundException(entity, request.Id);
+                throw new NotFoundException();
 
             entity.Name = request.Name;
             entity.GedcomTag = request.GedcomTag;
@@ -104,7 +104,7 @@ namespace Roots.Business.Services
                 .SingleOrDefaultAsync(e => e.Id == request.Id, cancellationToken);
 
             if (entity == null)
-                throw new NotFoundException(entity, request.Id);
+                throw new NotFoundException();
 
             _context.EventTypes.Remove(entity);
 

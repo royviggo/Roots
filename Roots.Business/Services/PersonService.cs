@@ -87,7 +87,7 @@ namespace Roots.Business.Services
             var entity = await _context.Persons.FindAsync(request.Id);
 
             if (entity == null)
-                throw new NotFoundException(entity, request.Id);
+                throw new NotFoundException();
 
             entity.FirstName = request.FirstName;
             entity.LastName = request.LastName;
@@ -104,7 +104,7 @@ namespace Roots.Business.Services
                 .SingleOrDefaultAsync(cancellationToken);
 
             if (entity == null)
-                throw new NotFoundException(entity, request.Id);
+                throw new NotFoundException();
 
             _context.Persons.Remove(entity);
 
