@@ -9,6 +9,9 @@ using Roots.Web.Queries;
 using Roots.Web.Responses;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+using Roots.Business.Responses;
+using Roots.Business.Exceptions;
 
 namespace Roots.Web.Controllers
 {
@@ -33,7 +36,9 @@ namespace Roots.Web.Controllers
         /// </summary>
         /// <returns>A list of Place models</returns>
         [HttpGet]
-        public async Task<IActionResult> Get([FromQuery]PlaceQuery query)
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<PlaceVm>> Get([FromQuery]PlaceQuery query)
         {
             var filter = _mapper.Map<PlaceQuery, PlaceFilter>(query);
             var places = await _placeService.GetPagedAsync(filter);
@@ -50,7 +55,9 @@ namespace Roots.Web.Controllers
         /// <param name="id">The Place Id</param>
         /// <returns>A Place model</returns>
         [HttpGet("{id}")]
-        public async Task<IActionResult> Get(int id)
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<PlaceVm>> Get(int id)
         {
             var place = await _placeService.GetByIdAsync(id);
 
@@ -66,37 +73,84 @@ namespace Roots.Web.Controllers
         /// <param name="model">The Place create model</param>
         /// <returns>Inserted id</returns>
         [HttpPost]
-        public async Task<ActionResult<int>> Create([FromBody]PlaceCreateModel model)
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<CreatedModel>> Create([FromBody]PlaceCreateModel model)
         {
             var request = _mapper.Map<PlaceCreateModel, PlaceCreateRequest>(model);
 
-            return await _placeService.Create(request);
+            if (request == null)
+                return BadRequest();
+
+            try
+            {
+                var id = await _placeService.Create(request);
+                return Created(nameof(Get), new CreatedModel { Id = id });
+            }
+            catch
+            {
+                return BadRequest();
+            }
         }
 
         /// <summary>
         /// Updates a place.
         /// </summary>
+        /// <param name="id">The Place Id</param>
         /// <param name="model">The Place update model</param>
         /// <returns>Number of records updated</returns>
-        [HttpPut]
-        public async Task<ActionResult<int>> Update([FromBody]PlaceUpdateModel model)
+        [HttpPut("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> Update(int id, [FromBody]PlaceUpdateModel model)
         {
             var request = _mapper.Map<PlaceUpdateModel, PlaceUpdateRequest>(model);
 
-            return await _placeService.Update(request);
+            if (request == null || id != request.Id)
+                return BadRequest();
+
+            try
+            {
+                await _placeService.Update(request);
+                return NoContent();
+            }
+            catch (NotFoundException)
+            {
+                return NotFound();
+            }
+            catch
+            {
+                return BadRequest();
+            }
         }
 
         /// <summary>
         /// Delete a place.
         /// </summary>
-        /// <param name="model">The Place delete model</param>
+        /// <param name="id">The Place Id</param>
         /// <returns>Number of records deleted</returns>
-        [HttpDelete]
-        public async Task<ActionResult<int>> Delete([FromBody]DeleteModel model)
+        [HttpDelete("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> Delete(int id)
         {
-            var request = _mapper.Map<DeleteModel, DeleteRequest>(model);
+            var request = new DeleteRequest { Id = id };
 
-            return await _placeService.Delete(request);
+            try
+            {
+                await _placeService.Delete(request);
+                return NoContent();
+            }
+            catch (NotFoundException)
+            {
+                return NotFound();
+            }
+            catch
+            {
+                return BadRequest();
+            }
         }
     }
 }

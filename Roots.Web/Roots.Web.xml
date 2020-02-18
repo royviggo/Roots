@@ -71,18 +71,19 @@
             <param name="model">The EventType create model</param>
             <returns>Inserted id</returns>
         </member>
-        <member name="M:Roots.Web.Controllers.EventTypeController.Update(Roots.Web.InputModels.EventTypeUpdateModel)">
+        <member name="M:Roots.Web.Controllers.EventTypeController.Update(System.Int32,Roots.Web.InputModels.EventTypeUpdateModel)">
             <summary>
             Updates a EventType.
             </summary>
+            <param name="id">Event Type Id</param>
             <param name="model">The EventType update model</param>
             <returns>Number of records updated</returns>
         </member>
-        <member name="M:Roots.Web.Controllers.EventTypeController.Delete(Roots.Web.InputModels.DeleteModel)">
+        <member name="M:Roots.Web.Controllers.EventTypeController.Delete(System.Int32)">
             <summary>
             Delete a EventType.
             </summary>
-            <param name="model">The EventType delete model</param>
+            <param name="id">Event Type Id</param>
             <returns>Number of records deleted</returns>
         </member>
         <member name="T:Roots.Web.Controllers.PersonController">
@@ -110,18 +111,19 @@
             <param name="model">The Person create model</param>
             <returns>Inserted id</returns>
         </member>
-        <member name="M:Roots.Web.Controllers.PersonController.Update(Roots.Web.InputModels.PersonUpdateModel)">
+        <member name="M:Roots.Web.Controllers.PersonController.Update(System.Int32,Roots.Web.InputModels.PersonUpdateModel)">
             <summary>
             Updates a person.
             </summary>
+            <param name="id">Person Id</param>
             <param name="model">The Person update model</param>
             <returns>Number of records updated</returns>
         </member>
-        <member name="M:Roots.Web.Controllers.PersonController.Delete(Roots.Web.InputModels.DeleteModel)">
+        <member name="M:Roots.Web.Controllers.PersonController.Delete(System.Int32)">
             <summary>
             Delete a person.
             </summary>
-            <param name="model">The Person delete model</param>
+            <param name="id">Person Id</param>
             <returns>Number of records deleted</returns>
         </member>
         <member name="T:Roots.Web.Controllers.PlaceController">
@@ -149,18 +151,19 @@
             <param name="model">The Place create model</param>
             <returns>Inserted id</returns>
         </member>
-        <member name="M:Roots.Web.Controllers.PlaceController.Update(Roots.Web.InputModels.PlaceUpdateModel)">
+        <member name="M:Roots.Web.Controllers.PlaceController.Update(System.Int32,Roots.Web.InputModels.PlaceUpdateModel)">
             <summary>
             Updates a place.
             </summary>
+            <param name="id">The Place Id</param>
             <param name="model">The Place update model</param>
             <returns>Number of records updated</returns>
         </member>
-        <member name="M:Roots.Web.Controllers.PlaceController.Delete(Roots.Web.InputModels.DeleteModel)">
+        <member name="M:Roots.Web.Controllers.PlaceController.Delete(System.Int32)">
             <summary>
             Delete a place.
             </summary>
-            <param name="model">The Place delete model</param>
+            <param name="id">The Place Id</param>
             <returns>Number of records deleted</returns>
         </member>
     </members>

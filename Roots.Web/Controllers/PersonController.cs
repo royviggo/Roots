@@ -1,8 +1,11 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Roots.Business.Exceptions;
 using Roots.Business.Filters;
 using Roots.Business.Interfaces;
 using Roots.Business.Requests;
+using Roots.Business.Responses;
 using Roots.Web.InputModels;
 using Roots.Web.Models;
 using Roots.Web.Queries;
@@ -33,7 +36,9 @@ namespace Roots.Web.Controllers
         /// </summary>
         /// <returns>A list of Person models with events</returns>
         [HttpGet]
-        public async Task<IActionResult> Get([FromQuery]PersonQuery query)
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<PersonVm>> Get([FromQuery]PersonQuery query)
         {
             var filter = _mapper.Map<PersonQuery, PersonFilter>(query);
             var persons = await _personService.GetPagedAsync(filter);
@@ -50,7 +55,9 @@ namespace Roots.Web.Controllers
         /// <param name="id">The Person Id</param>
         /// <returns>A Person model with events</returns>
         [HttpGet("{id}")]
-        public async Task<IActionResult> Get(int id)
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<PersonVm>> Get(int id)
         {
             var person = await _personService.GetByIdAsync(id);
 
@@ -66,37 +73,84 @@ namespace Roots.Web.Controllers
         /// <param name="model">The Person create model</param>
         /// <returns>Inserted id</returns>
         [HttpPost]
-        public async Task<ActionResult<int>> Create([FromBody]PersonCreateModel model)
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<CreatedModel>> Create([FromBody]PersonCreateModel model)
         {
             var request = _mapper.Map<PersonCreateModel, PersonCreateRequest>(model);
 
-            return await _personService.Create(request);
+            if (request == null)
+                return BadRequest();
+
+            try
+            {
+                var id = await _personService.Create(request);
+                return Created(nameof(Get), new CreatedModel { Id = id });
+            }
+            catch
+            {
+                return BadRequest();
+            }
         }
 
         /// <summary>
         /// Updates a person.
         /// </summary>
+        /// <param name="id">Person Id</param>
         /// <param name="model">The Person update model</param>
         /// <returns>Number of records updated</returns>
-        [HttpPut]
-        public async Task<ActionResult<int>> Update([FromBody]PersonUpdateModel model)
+        [HttpPut("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> Update(int id, [FromBody]PersonUpdateModel model)
         {
             var request = _mapper.Map<PersonUpdateModel, PersonUpdateRequest>(model);
 
-            return await _personService.Update(request);
+            if (request == null || id != request.Id)
+                return BadRequest();
+
+            try
+            {
+                await _personService.Update(request);
+                return NoContent();
+            }
+            catch (NotFoundException)
+            {
+                return NotFound();
+            }
+            catch
+            {
+                return BadRequest();
+            }
         }
 
         /// <summary>
         /// Delete a person.
         /// </summary>
-        /// <param name="model">The Person delete model</param>
+        /// <param name="id">Person Id</param>
         /// <returns>Number of records deleted</returns>
-        [HttpDelete]
-        public async Task<ActionResult<int>> Delete([FromBody]DeleteModel model)
+        [HttpDelete("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> Delete(int id)
         {
-            var request = _mapper.Map<DeleteModel, DeleteRequest>(model);
+            var request = new DeleteRequest { Id = id };
 
-            return await _personService.Delete(request);
+            try
+            {
+                await _personService.Delete(request);
+                return NoContent();
+            }
+            catch (NotFoundException)
+            {
+                return NotFound();
+            }
+            catch
+            {
+                return BadRequest();
+            }
         }
     }
 }
