@@ -33,10 +33,10 @@ namespace Roots.Web
             services.AddBusinessLayer();
 
             services.AddRouting(options => options.LowercaseUrls = true);
+
             services.AddControllers()
                 .AddJsonOptions(options =>
                 {
-                    options.JsonSerializerOptions.PropertyNamingPolicy = null;
                     options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
                 });
 
