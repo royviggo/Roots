@@ -8,10 +8,10 @@ namespace Roots.Web.Mapping
     {
         public DtoToVmMappingProfile()
         {
-            CreateMap<EventDto, EventVm>().ReverseMap();
-            CreateMap<EventTypeDto, EventTypeVm>().ReverseMap();
-            CreateMap<PersonDto, PersonVm>().ReverseMap();
-            CreateMap<PlaceDto, PlaceVm>().ReverseMap();
+            CreateMap<EventDto, EventModel>().ReverseMap();
+            CreateMap<EventTypeDto, EventTypeModel>().ReverseMap();
+            CreateMap<PersonDto, PersonModel>().ReverseMap();
+            CreateMap<PlaceDto, PlaceModel>().ReverseMap();
         }
     }
 }

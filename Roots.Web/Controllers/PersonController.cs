@@ -38,7 +38,7 @@ namespace Roots.Web.Controllers
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<PersonVm>> Get([FromQuery]PersonQuery query)
+        public async Task<ActionResult<PersonModel>> Get([FromQuery]PersonQuery query)
         {
             var filter = _mapper.Map<PersonQuery, PersonFilter>(query);
             var persons = await _personService.GetPagedAsync(filter);
@@ -46,7 +46,7 @@ namespace Roots.Web.Controllers
             if (persons.Data == null)
                 return BadRequest();
 
-            return Ok(_mapper.Map<PagedResponse<IEnumerable<PersonVm>>>(persons));
+            return Ok(_mapper.Map<PagedResponse<IEnumerable<PersonModel>>>(persons));
         }
 
         /// <summary>
@@ -57,14 +57,14 @@ namespace Roots.Web.Controllers
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<PersonVm>> Get(int id)
+        public async Task<ActionResult<PersonModel>> Get(int id)
         {
             var person = await _personService.GetByIdAsync(id);
 
             if (person == null)
                 return NotFound();
 
-            return Ok(new Response<PersonVm>(_mapper.Map<PersonVm>(person)));
+            return Ok(new Response<PersonModel>(_mapper.Map<PersonModel>(person)));
         }
 
         /// <summary>

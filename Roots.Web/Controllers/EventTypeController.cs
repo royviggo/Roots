@@ -39,7 +39,7 @@ namespace Roots.Web.Controllers
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<EventTypeVm>> Get([FromQuery]EventTypeQuery query)
+        public async Task<ActionResult<EventTypeModel>> Get([FromQuery]EventTypeQuery query)
         {
             var filter = _mapper.Map<EventTypeQuery, EventTypeFilter>(query);
             var events = await _eventTypeService.GetPagedAsync(filter);
@@ -47,7 +47,7 @@ namespace Roots.Web.Controllers
             if (events == null)
                 return BadRequest();
 
-            return Ok(_mapper.Map<PagedResponse<IEnumerable<EventTypeVm>>>(events));
+            return Ok(_mapper.Map<PagedResponse<IEnumerable<EventTypeModel>>>(events));
         }
 
         /// <summary>
@@ -58,14 +58,14 @@ namespace Roots.Web.Controllers
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<EventTypeVm>> Get(int id)
+        public async Task<ActionResult<EventTypeModel>> Get(int id)
         {
             var evnt = await _eventTypeService.GetByIdAsync(id);
 
             if (evnt == null)
                 return NotFound();
 
-            return Ok(new Response<EventTypeVm>(_mapper.Map<EventTypeVm>(evnt)));
+            return Ok(new Response<EventTypeModel>(_mapper.Map<EventTypeModel>(evnt)));
         }
 
         /// <summary>

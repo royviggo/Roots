@@ -11,19 +11,19 @@ namespace Roots.Web.Mapping
     {
         public PagedToResponseMappingProfile()
         {
-            CreateMap<Paged<IEnumerable<PersonDto>>, PagedResponse<IEnumerable<PersonVm>>>()
+            CreateMap<Paged<IEnumerable<PersonDto>>, PagedResponse<IEnumerable<PersonModel>>>()
                 .ForMember(dest => dest.Page, map => map.MapFrom(source => source.PageNumber))
                 .ForMember(dest => dest.Limit, map => map.MapFrom(source => source.PageSize));
 
-            CreateMap<Paged<IEnumerable<EventDto>>, PagedResponse<IEnumerable<EventVm>>>()
+            CreateMap<Paged<IEnumerable<EventDto>>, PagedResponse<IEnumerable<EventModel>>>()
                 .ForMember(dest => dest.Page, map => map.MapFrom(source => source.PageNumber))
                 .ForMember(dest => dest.Limit, map => map.MapFrom(source => source.PageSize));
 
-            CreateMap<Paged<IEnumerable<EventTypeDto>>, PagedResponse<IEnumerable<EventTypeVm>>>()
+            CreateMap<Paged<IEnumerable<EventTypeDto>>, PagedResponse<IEnumerable<EventTypeModel>>>()
                 .ForMember(dest => dest.Page, map => map.MapFrom(source => source.PageNumber))
                 .ForMember(dest => dest.Limit, map => map.MapFrom(source => source.PageSize));
 
-            CreateMap<Paged<IEnumerable<PlaceDto>>, PagedResponse<IEnumerable<PlaceVm>>>()
+            CreateMap<Paged<IEnumerable<PlaceDto>>, PagedResponse<IEnumerable<PlaceModel>>>()
                 .ForMember(dest => dest.Page, map => map.MapFrom(source => source.PageNumber))
                 .ForMember(dest => dest.Limit, map => map.MapFrom(source => source.PageSize));
         }

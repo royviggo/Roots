@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Roots.Web.Models
 {
-    public class EventVm
+    public class EventModel
     {
         public int Id { get; set; }
         public int EventTypeId { get; set; }
@@ -18,7 +18,7 @@ namespace Roots.Web.Models
         public DateTime? CreatedDate { get; set; }
         public DateTime? ModifiedDate { get; set; }
 
-        public EventTypeVm EventType { get; set; }
-        public PlaceVm Place { get; set; }
+        public EventTypeModel EventType { get; set; }
+        public PlaceModel Place { get; set; }
     }
 }

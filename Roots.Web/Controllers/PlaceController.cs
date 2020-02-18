@@ -38,7 +38,7 @@ namespace Roots.Web.Controllers
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<PlaceVm>> Get([FromQuery]PlaceQuery query)
+        public async Task<ActionResult<PlaceModel>> Get([FromQuery]PlaceQuery query)
         {
             var filter = _mapper.Map<PlaceQuery, PlaceFilter>(query);
             var places = await _placeService.GetPagedAsync(filter);
@@ -46,7 +46,7 @@ namespace Roots.Web.Controllers
             if (places.Data == null)
                 return BadRequest();
 
-            return Ok(_mapper.Map<PagedResponse<IEnumerable<PlaceVm>>>(places));
+            return Ok(_mapper.Map<PagedResponse<IEnumerable<PlaceModel>>>(places));
         }
 
         /// <summary>
@@ -57,14 +57,14 @@ namespace Roots.Web.Controllers
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<PlaceVm>> Get(int id)
+        public async Task<ActionResult<PlaceModel>> Get(int id)
         {
             var place = await _placeService.GetByIdAsync(id);
 
             if (place == null)
                 return NotFound();
 
-            return Ok(new Response<PlaceVm>(_mapper.Map<PlaceVm>(place)));
+            return Ok(new Response<PlaceModel>(_mapper.Map<PlaceModel>(place)));
         }
 
         /// <summary>

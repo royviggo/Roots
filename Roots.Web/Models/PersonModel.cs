@@ -4,11 +4,11 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Roots.Web.Models
 {
-    public class PersonVm
+    public class PersonModel
     {
-        public PersonVm()
+        public PersonModel()
         {
-            Events = new List<EventVm>();
+            Events = new List<EventModel>();
         }
 
         public int Id { get; set; }
@@ -24,6 +24,6 @@ namespace Roots.Web.Models
         public DateTime? CreatedDate { get; set; }
         public DateTime? ModifiedDate { get; set; }
 
-        public IList<EventVm> Events { get; set; }
+        public IList<EventModel> Events { get; set; }
     }
 }
