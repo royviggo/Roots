@@ -10,6 +10,7 @@ using Roots.Data;
 using Roots.Web.Configuration;
 using Swashbuckle.AspNetCore.SwaggerUI;
 using System.IO;
+using System.Text.Json.Serialization;
 
 namespace Roots.Web
 {
@@ -33,7 +34,11 @@ namespace Roots.Web
 
             services.AddRouting(options => options.LowercaseUrls = true);
             services.AddControllers()
-                .AddJsonOptions(options => options.JsonSerializerOptions.PropertyNamingPolicy = null);
+                .AddJsonOptions(options =>
+                {
+                    options.JsonSerializerOptions.PropertyNamingPolicy = null;
+                    options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+                });
 
             services.AddSwaggerGen(options =>
             {
