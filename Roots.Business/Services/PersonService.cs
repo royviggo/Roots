@@ -42,6 +42,14 @@ namespace Roots.Business.Services
             if (!string.IsNullOrEmpty(filter.Name))
                 query = query.Where(p => p.FirstName.Contains(filter.Name) || p.LastName.Contains(filter.Name));
 
+            // query by gender
+            if (filter.Gender != 0)
+                query = query.Where(p => p.Gender == filter.Gender);
+
+            // query by status
+            if (filter.Status != 0)
+                query = query.Where(p => p.Status == filter.Status);
+
             // paging
             query = query.Skip(filter.Skip()).Take(filter.Take());
 

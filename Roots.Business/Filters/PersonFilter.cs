@@ -1,10 +1,12 @@
-﻿namespace Roots.Business.Filters
+﻿using Roots.Domain.Enums;
+
+namespace Roots.Business.Filters
 {
     public class PersonFilter : PaginationFilter
     {
         public PersonFilter() : base() { }
         public string Name { get; set; }
-        public int Gender { get; set; }
-        public int Status { get; set; }
+        public Gender Gender { get; set; }
+        public Status Status { get; set; }
     }
 }
