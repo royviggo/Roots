@@ -14,8 +14,10 @@ namespace Roots.Business.Mapping
             CreateMap<long, GenDate>().ConvertUsing(l => ConvertLongToGenDate(l));
             CreateMap<GenDate, long>().ConvertUsing(g => ConvertGenDateToLong(g));
 
+            CreateMap<Child, ChildDto>().ReverseMap();
             CreateMap<Event, EventDto>().ReverseMap();
             CreateMap<EventType, EventTypeDto>().ReverseMap();
+            CreateMap<Family, FamilyDto>().ReverseMap();
             CreateMap<Person, PersonDto>().ReverseMap();
             CreateMap<Place, PlaceDto>().ReverseMap();
         }
