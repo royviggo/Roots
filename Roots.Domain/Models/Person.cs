@@ -9,6 +9,7 @@ namespace Roots.Domain.Models
         public Person()
         {
             Events = new HashSet<Event>();
+            Families = new HashSet<Family>();
         }
 
         public int Id { get; set; }
@@ -17,6 +18,8 @@ namespace Roots.Domain.Models
         public Gender Gender { get; set; }
         public Status Status { get; set; }
 
+        public virtual Child Child { get; set; }
         public virtual ICollection<Event> Events { get; set; }
+        public virtual ICollection<Family> Families { get; set; }
     }
 }
