@@ -21,6 +21,8 @@ namespace Roots.Data.Context
         public virtual DbSet<Event> Events { get; set; }
         public virtual DbSet<EventType> EventTypes { get; set; }
         public virtual DbSet<Family> Families { get; set; }
+        public virtual DbSet<Partner> Partners { get; set; }
+        public virtual DbSet<PartnerRole> PartnerRoles { get; set; }
         public virtual DbSet<Person> Persons { get; set; }
         public virtual DbSet<Place> Places { get; set; }
 

@@ -11,6 +11,8 @@ namespace Roots.Business.Interfaces
         DbSet<Event> Events { get; set; }
         DbSet<EventType> EventTypes { get; set; }
         DbSet<Family> Families { get; set; }
+        DbSet<Partner> Partners { get; set; }
+        DbSet<PartnerRole> PartnerRoles { get; set; }
         DbSet<Person> Persons { get; set; }
         DbSet<Place> Places { get; set; }
 

@@ -9,7 +9,7 @@ namespace Roots.Domain.Models
         public Person()
         {
             Events = new HashSet<Event>();
-            Families = new HashSet<Family>();
+            Partners = new HashSet<Partner>();
         }
 
         public int Id { get; set; }
@@ -20,6 +20,6 @@ namespace Roots.Domain.Models
 
         public virtual Child Child { get; set; }
         public virtual ICollection<Event> Events { get; set; }
-        public virtual ICollection<Family> Families { get; set; }
+        public virtual ICollection<Partner> Partners { get; set; }
     }
 }

@@ -8,14 +8,12 @@ namespace Roots.Domain.Models
         public Family()
         {
             Children = new HashSet<Child>();
+            Partners = new HashSet<Partner>();
         }
 
         public int Id { get; set; }
-        public int FatherId { get; set; }
-        public int MotherId { get; set; }
 
-        public virtual Person Father { get; set; }
-        public virtual Person Mother { get; set; }
+        public virtual ICollection<Partner> Partners { get; set; }
         public virtual ICollection<Child> Children { get; set; }
     }
 }
