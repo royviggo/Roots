@@ -10,6 +10,7 @@ namespace Roots.Web.Models
         public PersonModel()
         {
             Events = new List<EventModel>();
+            Partners = new List<PartnerModel>();
         }
 
         public int Id { get; set; }
@@ -26,5 +27,6 @@ namespace Roots.Web.Models
         public DateTime? ModifiedDate { get; set; }
 
         public IList<EventModel> Events { get; set; }
+        public IList<PartnerModel> Partners { get; set; }
     }
 }

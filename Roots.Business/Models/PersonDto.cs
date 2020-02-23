@@ -9,6 +9,7 @@ namespace Roots.Business.Models
         public PersonDto()
         {
             Events = new List<EventDto>();
+            Partners = new List<PartnerDto>();
         }
 
         public int Id { get; set; }
@@ -19,6 +20,8 @@ namespace Roots.Business.Models
         public DateTime? CreatedDate { get; set; }
         public DateTime? ModifiedDate { get; set; }
 
+        public ChildDto Child { get; set; }
         public IList<EventDto> Events { get; set; }
+        public IList<PartnerDto> Partners { get; set; }
     }
 }

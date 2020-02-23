@@ -68,6 +68,9 @@ namespace Roots.Business.Services
                 .ThenInclude(e => e.EventType)
                 .Include(p => p.Events)
                 .ThenInclude(e => e.Place)
+                .Include(p => p.Partners)
+                .Include(c => c.Child)
+                .ThenInclude(f => f.Family)
                 .SingleOrDefaultAsync(p => p.Id == id, cancellationToken);
 
             return _mapper.Map<PersonDto>(person);

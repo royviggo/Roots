@@ -18,6 +18,8 @@ namespace Roots.Business.Mapping
             CreateMap<Event, EventDto>().ReverseMap();
             CreateMap<EventType, EventTypeDto>().ReverseMap();
             CreateMap<Family, FamilyDto>().ReverseMap();
+            CreateMap<Partner, PartnerDto>().ReverseMap();
+            CreateMap<PartnerRole, PartnerRoleDto>().ReverseMap();
             CreateMap<Person, PersonDto>().ReverseMap();
             CreateMap<Place, PlaceDto>().ReverseMap();
         }
