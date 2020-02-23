@@ -5,8 +5,14 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Roots.Web.Models
 {
-    public class PersonModel
+    public class PersonExtendedModel
     {
+        public PersonExtendedModel()
+        {
+            Events = new List<EventModel>();
+            Partners = new List<PartnerModel>();
+        }
+
         public int Id { get; set; }
 
         [StringLength(255)]
@@ -19,5 +25,9 @@ namespace Roots.Web.Models
         public Status Status { get; set; }
         public DateTime? CreatedDate { get; set; }
         public DateTime? ModifiedDate { get; set; }
+
+        //public ChildModel Child { get; set; }
+        public IList<EventModel> Events { get; set; }
+        public IList<PartnerModel> Partners { get; set; }
     }
 }

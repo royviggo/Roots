@@ -61,7 +61,7 @@ namespace Roots.Business.Services
             };
         }
 
-        public async Task<PersonDto> GetByIdAsync(int id, CancellationToken cancellationToken = default)
+        public async Task<PersonExtendedDto> GetByIdAsync(int id, CancellationToken cancellationToken = default)
         {
             var person = await _context.Persons
                 .Include(p => p.Events)
@@ -69,11 +69,12 @@ namespace Roots.Business.Services
                 .Include(p => p.Events)
                 .ThenInclude(e => e.Place)
                 .Include(p => p.Partners)
-                .Include(c => c.Child)
                 .ThenInclude(f => f.Family)
+                //.Include(c => c.Child)
+                //.ThenInclude(f => f.Family)
                 .SingleOrDefaultAsync(p => p.Id == id, cancellationToken);
 
-            return _mapper.Map<PersonDto>(person);
+            return _mapper.Map<PersonExtendedDto>(person);
         }
 
         public async Task<int> Create(PersonCreateRequest request, CancellationToken cancellationToken = default)

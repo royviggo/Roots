@@ -15,6 +15,7 @@ namespace Roots.Web.Mapping
             CreateMap<PartnerDto, PartnerModel>().ReverseMap();
             CreateMap<PartnerRoleDto, PartnerRoleModel>().ReverseMap();
             CreateMap<PersonDto, PersonModel>().ReverseMap();
+            CreateMap<PersonExtendedDto, PersonExtendedModel>().ReverseMap();
             CreateMap<PlaceDto, PlaceModel>().ReverseMap();
         }
     }

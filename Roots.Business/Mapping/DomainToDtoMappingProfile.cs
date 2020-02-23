@@ -21,6 +21,7 @@ namespace Roots.Business.Mapping
             CreateMap<Partner, PartnerDto>().ReverseMap();
             CreateMap<PartnerRole, PartnerRoleDto>().ReverseMap();
             CreateMap<Person, PersonDto>().ReverseMap();
+            CreateMap<Person, PersonExtendedDto>().ReverseMap();
             CreateMap<Place, PlaceDto>().ReverseMap();
         }
 

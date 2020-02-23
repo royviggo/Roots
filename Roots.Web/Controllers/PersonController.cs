@@ -57,14 +57,14 @@ namespace Roots.Web.Controllers
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<PersonModel>> Get(int id)
+        public async Task<ActionResult<PersonExtendedModel>> Get(int id)
         {
             var person = await _personService.GetByIdAsync(id);
 
             if (person == null)
                 return NotFound();
 
-            return Ok(new Response<PersonModel>(_mapper.Map<PersonModel>(person)));
+            return Ok(new Response<PersonExtendedModel>(_mapper.Map<PersonExtendedModel>(person)));
         }
 
         /// <summary>

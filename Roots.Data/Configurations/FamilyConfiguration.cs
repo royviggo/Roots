@@ -24,7 +24,7 @@ namespace Roots.Data.Configurations
                 .WithOne(f => f.Family)
                 .HasForeignKey(f => f.FamilyId)
                 .OnDelete(DeleteBehavior.ClientCascade)
-                .HasConstraintName("FK_PersonFamily_Family");
+                .HasConstraintName("FK_Partner_Family");
         }
     }
 }
