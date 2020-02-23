@@ -35,4 +35,67 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="[IX_Event_EventDate_NN]" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="f65f16a5-1c67-45a6-ad3b-b54ea65d7bad" ChangeDateTime="02/23/2020 08:49:11">
+    <Property Name="ElementName" Value="[dbo].[Parent]" />
+    <Property Name="ElementType" Value="SqlTable" />
+    <Property Name="ParentElementName" Value="[dbo]" />
+    <Property Name="ParentElementType" Value="SqlSchema" />
+    <Property Name="NewName" Value="PersonFamily" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="aa78a735-f95f-47b0-b9be-7449b38bc187" ChangeDateTime="02/23/2020 08:49:46">
+    <Property Name="ElementName" Value="[dbo].[PersonFamily].[ParentRoleId]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[PersonFamily]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="[FamilyRoleId]" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="c6248390-68d9-4ff3-a186-ab378da983ee" ChangeDateTime="02/23/2020 08:50:06">
+    <Property Name="ElementName" Value="[dbo].[PK_Parent]" />
+    <Property Name="ElementType" Value="SqlPrimaryKeyConstraint" />
+    <Property Name="ParentElementName" Value="[dbo].[PersonFamily]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="[PK_PersonFamily]" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="cf93147e-53b9-467d-a01f-9bd7e6903c94" ChangeDateTime="02/23/2020 08:50:41">
+    <Property Name="ElementName" Value="[dbo].[FK_Parent_Family]" />
+    <Property Name="ElementType" Value="SqlForeignKeyConstraint" />
+    <Property Name="ParentElementName" Value="[dbo].[PersonFamily]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="[FK_PersonFamily_Family]" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="fdc3d99c-f475-40b0-95fd-c6746c6bccec" ChangeDateTime="02/23/2020 08:50:58">
+    <Property Name="ElementName" Value="[dbo].[FK_Parent_ParentRole]" />
+    <Property Name="ElementType" Value="SqlForeignKeyConstraint" />
+    <Property Name="ParentElementName" Value="[dbo].[PersonFamily]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="[FK_PersonFamily_ParentRole]" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="5121e785-8cb2-4950-a873-1395e4f63437" ChangeDateTime="02/23/2020 08:51:12">
+    <Property Name="ElementName" Value="[dbo].[FK_Parent_Person]" />
+    <Property Name="ElementType" Value="SqlForeignKeyConstraint" />
+    <Property Name="ParentElementName" Value="[dbo].[PersonFamily]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="[FK_PersonFamily_Person]" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="0c9a886f-5ef7-4fdd-be07-9b0c6267c61f" ChangeDateTime="02/23/2020 08:51:52">
+    <Property Name="ElementName" Value="[dbo].[ParentRole]" />
+    <Property Name="ElementType" Value="SqlTable" />
+    <Property Name="ParentElementName" Value="[dbo]" />
+    <Property Name="ParentElementType" Value="SqlSchema" />
+    <Property Name="NewName" Value="[FamilyRole]" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="6ca77191-5cb5-441f-8a44-52e8fd91c4a8" ChangeDateTime="02/23/2020 08:52:07">
+    <Property Name="ElementName" Value="[dbo].[PK_ParentRole]" />
+    <Property Name="ElementType" Value="SqlPrimaryKeyConstraint" />
+    <Property Name="ParentElementName" Value="[dbo].[FamilyRole]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="[PK_FamilyRole]" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="a2e9c163-0c6e-456e-862a-d0f2d003cc78" ChangeDateTime="02/23/2020 09:37:36">
+    <Property Name="ElementName" Value="[dbo].[PersonFamily].[FamilyRoleId]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[PersonFamily]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="PartnerRoleId" />
+  </Operation>
 </Operations>
