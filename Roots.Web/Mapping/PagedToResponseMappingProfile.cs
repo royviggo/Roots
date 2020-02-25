@@ -23,6 +23,10 @@ namespace Roots.Web.Mapping
                 .ForMember(dest => dest.Page, map => map.MapFrom(source => source.PageNumber))
                 .ForMember(dest => dest.Limit, map => map.MapFrom(source => source.PageSize));
 
+            CreateMap<Paged<IEnumerable<FamilyDto>>, PagedResponse<IEnumerable<FamilyModel>>>()
+                .ForMember(dest => dest.Page, map => map.MapFrom(source => source.PageNumber))
+                .ForMember(dest => dest.Limit, map => map.MapFrom(source => source.PageSize));
+
             CreateMap<Paged<IEnumerable<PlaceDto>>, PagedResponse<IEnumerable<PlaceModel>>>()
                 .ForMember(dest => dest.Page, map => map.MapFrom(source => source.PageNumber))
                 .ForMember(dest => dest.Limit, map => map.MapFrom(source => source.PageSize));

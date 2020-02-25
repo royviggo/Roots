@@ -27,6 +27,10 @@ namespace Roots.Web.Mapping
                 .ForMember(dest => dest.PageNumber, map => map.MapFrom(source => source.Page))
                 .ForMember(dest => dest.PageSize, map => map.MapFrom(source => source.Limit));
 
+            CreateMap<FamilyQuery, FamilyFilter>()
+                .ForMember(dest => dest.PageNumber, map => map.MapFrom(source => source.Page))
+                .ForMember(dest => dest.PageSize, map => map.MapFrom(source => source.Limit));
+
             CreateMap<PlaceQuery, PlaceFilter>()
                 .ForMember(dest => dest.PageNumber, map => map.MapFrom(source => source.Page))
                 .ForMember(dest => dest.PageSize, map => map.MapFrom(source => source.Limit));

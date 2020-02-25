@@ -10,6 +10,7 @@ namespace Roots.Business
         {
             services.AddScoped<IEventService, EventService>();
             services.AddScoped<IEventTypeService, EventTypeService>();
+            services.AddScoped<IFamilyService, FamilyService>();
             services.AddScoped<IPersonService, PersonService>();
             services.AddScoped<IPlaceService, PlaceService>();
 

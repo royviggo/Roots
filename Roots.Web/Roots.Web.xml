@@ -86,6 +86,31 @@
             <param name="id">Event Type Id</param>
             <returns>Number of records deleted</returns>
         </member>
+        <member name="T:Roots.Web.Controllers.FamilyController">
+            <summary>
+            Api endpoints for Family
+            </summary>
+        </member>
+        <member name="M:Roots.Web.Controllers.FamilyController.Get(Roots.Web.Queries.FamilyQuery)">
+            <summary>
+            Gets a list of all familys. Filter on name, and paging with page number and limit.
+            </summary>
+            <returns>A list of Family models</returns>
+        </member>
+        <member name="M:Roots.Web.Controllers.FamilyController.Get(System.Int32)">
+            <summary>
+            Gets a specific family.
+            </summary>
+            <param name="id">The Family Id</param>
+            <returns>A Family model</returns>
+        </member>
+        <member name="M:Roots.Web.Controllers.FamilyController.Delete(System.Int32)">
+            <summary>
+            Delete a family.
+            </summary>
+            <param name="id">The Family Id</param>
+            <returns>Number of records deleted</returns>
+        </member>
         <member name="T:Roots.Web.Controllers.PersonController">
             <summary>
             Api endpoints for Person
