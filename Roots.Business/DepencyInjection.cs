@@ -13,6 +13,7 @@ namespace Roots.Business
             services.AddScoped<IFamilyService, FamilyService>();
             services.AddScoped<IPersonService, PersonService>();
             services.AddScoped<IPlaceService, PlaceService>();
+            services.AddScoped<IChildService, ChildService>();
 
             return services;
         }
