@@ -7,6 +7,7 @@ using Roots.Business.Interfaces;
 using Roots.Business.Models;
 using Roots.Business.Requests;
 using Roots.Business.Responses;
+using Roots.Domain.Enums;
 using Roots.Domain.Models;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,11 +20,15 @@ namespace Roots.Business.Services
     {
         private readonly IRootsDbContext _context;
         private readonly IMapper _mapper;
+        private readonly IPersonService _personService;
+        private readonly IChildService _childService;
 
-        public FamilyService(IRootsDbContext context, IMapper mapper)
+        public FamilyService(IRootsDbContext context, IMapper mapper, IPersonService personService, IChildService childService)
         {
             _context = context;
             _mapper = mapper;
+            _personService = personService;
+            _childService = childService;
         }
 
         public async Task<IEnumerable<FamilyDto>> GetAllAsync(CancellationToken cancellationToken = default)
@@ -58,11 +63,24 @@ namespace Roots.Business.Services
 
         public async Task<int> Create(FamilyCreateRequest request, CancellationToken cancellationToken = default)
         {
-            var entity = new Family
-            {
-            };
+            var entity = new Family();
 
             _context.Families.Add(entity);
+
+            if (request.FatherId != null)
+                CreatePartner((int)request.FatherId, entity.Id, PartnerRoleType.Father);
+
+            if (request.MotherId != null)
+                CreatePartner((int)request.MotherId, entity.Id, PartnerRoleType.Mother);
+
+            foreach (var childId in request.Children)
+            {
+                await _childService.Create(new ChildCreateRequest
+                {
+                    FamilyId = entity.Id,
+                    PersonId = childId,
+                });
+            }
 
             await _context.SaveChangesAsync(cancellationToken);
 
@@ -91,6 +109,21 @@ namespace Roots.Business.Services
             _context.Families.Remove(entity);
 
             return await _context.SaveChangesAsync(cancellationToken);
+        }
+
+        private void CreatePartner(int personId, int familyId, PartnerRoleType partnerRoleType)
+        {
+            var person = _personService.GetByIdAsync(personId);
+            if (person != null)
+            {
+                var partner = new Partner
+                {
+                    FamilyId = familyId,
+                    PersonId = person.Id,
+                    PartnerRoleId = (int)partnerRoleType,
+                };
+                _context.Partners.Add(partner);
+            }
         }
     }
 }
