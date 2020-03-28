@@ -17,13 +17,11 @@ namespace Roots.Business.Services
     {
         private readonly IRootsDbContext _context;
         private readonly IMapper _mapper;
-        private readonly IPersonService _personService;
 
-        public ChildService(IRootsDbContext context, IMapper mapper, IPersonService personService)
+        public ChildService(IRootsDbContext context, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;
-            _personService = personService;
         }
 
         public async Task<ChildDto> GetByIdAsync(int id, CancellationToken cancellationToken = default)
