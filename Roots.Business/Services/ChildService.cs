@@ -28,8 +28,7 @@ namespace Roots.Business.Services
 
         public async Task<ChildDto> GetByIdAsync(int id, CancellationToken cancellationToken = default)
         {
-            var evnt = await _context.Children
-                .SingleOrDefaultAsync(e => e.Id == id, cancellationToken);
+            var evnt = await _context.Children.FindAsync(id);
 
             return _mapper.Map<ChildDto>(evnt);
         }
@@ -37,7 +36,7 @@ namespace Roots.Business.Services
         public async Task<ChildDto> GetByPersonIdAsync(int personId, CancellationToken cancellationToken = default)
         {
             var evnt = await _context.Children
-                .SingleOrDefaultAsync(e => e.PersonId == personId, cancellationToken);
+                .FirstOrDefaultAsync(e => e.PersonId == personId, cancellationToken);
 
             return _mapper.Map<ChildDto>(evnt);
         }
@@ -67,9 +66,7 @@ namespace Roots.Business.Services
 
         public async Task<int> Delete(DeleteRequest request, CancellationToken cancellationToken = default)
         {
-            var entity = await _context.Children
-                .Where(entity => entity.Id == request.Id)
-                .SingleOrDefaultAsync(cancellationToken);
+            var entity = await _context.Children.FindAsync(request.Id);
 
             if (entity == null)
                 throw new NotFoundException();

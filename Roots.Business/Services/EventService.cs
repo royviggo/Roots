@@ -64,7 +64,7 @@ namespace Roots.Business.Services
             var evnt = await _context.Events
                 .Include(e => e.EventType)
                 .Include(e => e.Place)
-                .SingleOrDefaultAsync(e => e.Id == id, cancellationToken);
+                .FirstOrDefaultAsync(e => e.Id == id, cancellationToken);
 
             return _mapper.Map<EventDto>(evnt);
         }
@@ -105,9 +105,7 @@ namespace Roots.Business.Services
 
         public async Task<int> Delete(DeleteRequest request, CancellationToken cancellationToken = default)
         {
-            var entity = await _context.Events
-                .Where(entity => entity.Id == request.Id)
-                .SingleOrDefaultAsync(cancellationToken);
+            var entity = await _context.Events.FindAsync(request.Id);
 
             if (entity == null)
                 throw new NotFoundException();

@@ -8,7 +8,6 @@ using Roots.Business.Models;
 using Roots.Business.Requests;
 using Roots.Business.Responses;
 using Roots.Domain.Models;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -55,10 +54,9 @@ namespace Roots.Business.Services
 
         public async Task<PlaceDto> GetByIdAsync(int id, CancellationToken cancellationToken = default)
         {
-            var evnt = await _context.Places
-                .SingleOrDefaultAsync(e => e.Id == id, cancellationToken);
+            var entity = await _context.Places.FindAsync(id);
 
-            return _mapper.Map<PlaceDto>(evnt);
+            return _mapper.Map<PlaceDto>(entity);
         }
 
         public async Task<int> Create(PlaceCreateRequest request, CancellationToken cancellationToken = default)
@@ -89,9 +87,7 @@ namespace Roots.Business.Services
 
         public async Task<int> Delete(DeleteRequest request, CancellationToken cancellationToken = default)
         {
-            var entity = await _context.Places
-                .Where(entity => entity.Id == request.Id)
-                .SingleOrDefaultAsync(cancellationToken);
+            var entity = await _context.Places.FindAsync(request.Id);
 
             if (entity == null)
                 throw new NotFoundException();

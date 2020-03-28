@@ -70,9 +70,7 @@ namespace Roots.Business.Services
                 .ThenInclude(e => e.Place)
                 .Include(p => p.Partners)
                 .ThenInclude(f => f.Family)
-                //.Include(c => c.Child)
-                //.ThenInclude(f => f.Family)
-                .SingleOrDefaultAsync(p => p.Id == id, cancellationToken);
+                .FirstOrDefaultAsync(p => p.Id == id, cancellationToken);
 
             return _mapper.Map<PersonExtendedDto>(person);
         }
@@ -111,9 +109,7 @@ namespace Roots.Business.Services
 
         public async Task<int> Delete(DeleteRequest request, CancellationToken cancellationToken = default)
         {
-            var entity = await _context.Persons
-                .Where(entity => entity.Id == request.Id)
-                .SingleOrDefaultAsync(cancellationToken);
+            var entity = await _context.Persons.FindAsync(request.Id);
 
             if (entity == null)
                 throw new NotFoundException();
