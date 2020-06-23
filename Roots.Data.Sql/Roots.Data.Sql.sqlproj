@@ -79,4 +79,7 @@
   <ItemGroup>
     <None Include="Roots.Data.Sql.publish.xml" />
   </ItemGroup>
+  <PropertyGroup>
+    <PostBuildEvent>xcopy /y "$(ProjectDir)$(OutDir)Roots.Data.Sql.dacpac" "$(SolutionDir)Database"</PostBuildEvent>
+  </PropertyGroup>
 </Project>
