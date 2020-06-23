@@ -1,0 +1,23 @@
+version: '3.4'
+
+services:
+  roots.web:
+    container_name: roots.web
+    build:
+      context: ./
+      dockerfile: Roots.Web/Dockerfile
+    ports:
+      - "8000:80"
+    depends_on:
+      - roots.db
+
+  roots.db:
+    container_name: roots.db
+    build:
+      context: ./
+      dockerfile: Database/Dockerfile
+    environment:
+      SA_PASSWORD: "Password123!"
+      ACCEPT_EULA: "Y"
+    ports:
+      - "1433:1433"
