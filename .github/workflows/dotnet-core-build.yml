@@ -17,4 +17,4 @@ jobs:
     - name: Install dependencies
       run: dotnet restore Roots.sln
     - name: Build
-      run: dotnet build --configuration Release --no-restore
+      run: dotnet build --configuration Release --no-restore Roots.sln
