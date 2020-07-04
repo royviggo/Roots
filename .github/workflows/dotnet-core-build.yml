@@ -15,6 +15,6 @@ jobs:
       with:
         dotnet-version: 3.1.101
     - name: Install dependencies
-      run: dotnet restore
+      run: dotnet restore Roots.sln
     - name: Build
       run: dotnet build --configuration Release --no-restore Roots.Web/Roots.Web.csproj
