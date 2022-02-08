@@ -26,7 +26,7 @@ EXPOSE 1433
 USER root
 RUN apt-get update \
     && apt-get install unzip -y \
-    && wget -q -O /var/opt/sqlpackage.zip https://go.microsoft.com/fwlink/?linkid=2069122 \
+    && wget -q -O /var/opt/sqlpackage.zip https://go.microsoft.com/fwlink/?linkid=2185670 \
     && unzip -qq /var/opt/sqlpackage.zip -d /var/opt/sqlpackage \
     && rm /var/opt/sqlpackage.zip \
     && chmod +x /var/opt/sqlpackage/sqlpackage \
